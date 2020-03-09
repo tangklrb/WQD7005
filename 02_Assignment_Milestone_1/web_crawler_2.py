@@ -361,19 +361,19 @@ while True:
         # Search for Individual Condominium's page url format - reverse engineering from javascript
         try:
             condo_id = condo['Id']
-            condo_name = condo['Name']
+            condo_name = str(condo['Name'])
             condo_page_name = format_url(condo_name) + "-" + str(condo_id)
             condo_page_url = host + "condominiums/" + condo_page_name
-            condo_property_type = condo['PropertyType']
         except:
             print('Error:', e, file=log, flush=True)
             print('Error: Unable to determine Condominium ID, Name or URL. Continue ', file=log, flush=True)
-            condo['SalesQueryUrl'] = '-'
-            condo['PageName'] = '-'
-            condo['PageUrl1'] = '-'
-            condo['PageUrl2'] = '-'
+            condo['SalesQueryUrl'] = None
+            condo['PageName'] = None if condo_page_name is None else condo_page_name
+            condo['PageUrl1'] = None if condo_page_url is None else condo_page_url
+            condo['PageUrl2'] = None
         else:
             try:
+                condo_property_type = str(condo['PropertyType'])
                 condo['SalesQueryUrl'] = host + 'sale/' + format_url(condo_property_type) + '/?q=' + urllib.parse.quote(condo_name)
                 condo['PageName'] = condo_page_name
                 condo['PageUrl1'] = condo_page_url
@@ -381,16 +381,16 @@ while True:
             except HTTPError as e:
                 print('Error:', 'HTTP Error: ' + str(html.getcode()), file=log, flush=True)
                 print('Error: Unable to determine Condominium URL. Continue ', file=log, flush=True)
-                condo['PageUrl2'] = '-'
+                condo['PageUrl2'] = None
             except URLError as e:
                 print('Error:', 'Server Not Found: ' + str(html.getcode()), file=log, flush=True)
                 print('Error: Unable to determine Condominium URL. Continue ', file=log, flush=True)
-                condo['PageUrl2'] = '-'
+                condo['PageUrl2'] = None
             else:
                 condo['PageUrl2'] = html.geturl()
 
-        print('[A] URL Search:', condo_name, '[Formulated]', condo['PageUrl1'], file=log, flush=True)
-        print('[A] URL Search:', condo_name, '[Redirected]', condo['PageUrl2'], file=log, flush=True)
+        print('[A] URL Search:', condo_name, '[Formulated]', str(condo['PageUrl1']), file=log, flush=True)
+        print('[A] URL Search:', condo_name, '[Redirected]', str(condo['PageUrl2']), file=log, flush=True)
 
         # Individual Condominium's most relevant placeID
         condo_suggested_place_id = list()
