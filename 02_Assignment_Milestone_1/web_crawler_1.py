@@ -13,13 +13,13 @@ from urllib.error import HTTPError, URLError
 data_directory = 'data/'
 host = 'https://www.iproperty.com.my/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
-log = open('log.txt', 'a+')
+log = open('web_crawler_1.txt', 'a+')
 max_crawl_retry = 5
 
 
 def cool_down(min_sec=1, max_sec=5):
     crawl_interval = random.randint(min_sec * random.randint(2, 3), max_sec * random.randint(5, 7))
-    # print('Cooldown:', crawl_interval, 'seconds', flush=True)
+    # print('Cooldown:', crawl_interval, 'seconds', file=log, flush=True)
     time.sleep(crawl_interval)
 
 
@@ -45,7 +45,7 @@ def crawl_condo(page):
         'x-requested-with': 'XMLHttpRequest'
     }
 
-    print('Crawl: Condominiums Page(' + str(page) + '), From', ref_url, flush=True)
+    print('Crawl: Condominiums Page(' + str(page) + '), From', ref_url, file=log, flush=True)
     retry_count = 0
 
     while True:
@@ -102,7 +102,7 @@ def crawl_place(condo):
         'query': 'query ($channel: Channel, $query: String!, $administrativeArea: String!, $maxSuggestions: Int, $types: [String], $subTypes: [String]) {\n  ascSuggestions(channel: $channel, query: $query, administrativeArea: $administrativeArea, maxSuggestions: $maxSuggestions, types: $types, subTypes: $subTypes) {\n    items {\n      id\n      type\n      title\n      subtitle\n      label\n      multilanguagePlace {\n        enGB {\n          level1\n          level2\n          level3\n        }\n        msMY {\n          level1\n          level2\n          level3\n        }\n        zhHK {\n          level1\n          level2\n          level3\n        }\n        zhCN {\n          level1\n          level2\n          level3\n        }\n        idID {\n          level1\n          level2\n          level3\n        }\n      }\n      additionalInfo {\n        ... on SuggestionAdditionalStationInfo {\n          stops {\n            routeId\n            subType\n            routeCode\n            routeColorCode\n            routeDisplaySequence\n            stopIsUnderConstruction\n            stopDisplaySequence\n            routeName {\n              enGB\n              msMY\n              zhHK\n              zhCN\n              idID\n            }\n            isExternalStop\n          }\n          name {\n            enGB\n            msMY\n            zhHK\n            zhCN\n            idID\n          }\n        }\n      }\n    }\n    totalCount\n  }\n}\n'
     }
 
-    print('[1] Crawl: Place Suggestion,', 'From:', ref_url, flush=True)
+    print('[1] Crawl: Place Suggestion,', 'From:', ref_url, file=log, flush=True)
     retry_count = 0
 
     while True:
@@ -178,7 +178,7 @@ def crawl_listing(condo, page_token=1):
         'query': 'query ($channels: [String!], $customTexts: [String], $placeIds: [String], $poiIds: [String], $distance: Int, $sortBy: String, $filters: ListingFilter, $places: [PlaceFilter], $developerId: String, $pageToken: String, $adId: String) {\n  ascListings(channels: $channels, customTexts: $customTexts, placeIds: $placeIds, poiIds: $poiIds, distance: $distance, sortBy: $sortBy, filters: $filters, places: $places, pageSize: 20, pageToken: $pageToken, developerId: $developerId, primaryListingFromSolr: true, adId: $adId) {\n    items {\n      id\n      channels\n      kind\n      shareLink\n      title\n      description\n      subtitle\n      tier\n      isPremiumPlus\n      propertyType\n      color\n      prices {\n        type\n        currency\n        label\n        symbol\n        min\n        max\n        minPricePerSizeUnitByBuiltUp\n        maxPricePerSizeUnitByBuiltUp\n        minPricePerSizeUnitByLandArea\n        maxPricePerSizeUnitByLandArea\n        monthlyPayment\n      }\n      cover {\n        type\n        url\n        urlTemplate\n        width\n        height\n        description\n        thumbnailUrl\n        mimeType\n      }\n      medias {\n        type\n        url\n        urlTemplate\n        width\n        height\n        description\n        thumbnailUrl\n        mimeType\n      }\n      floorPlanImages {\n        type\n        url\n      }\n      youtubeIds\n      updatedAt\n      postedAt\n      address {\n        formattedAddress\n        lat\n        lng\n        hideMarker\n      }\n      referenceCode\n      listerReferenceCode\n      transacted\n      multilanguagePlace {\n        enGB {\n          level1\n          level2\n          level3\n        }\n        zhHK {\n          level1\n          level2\n          level3\n        }\n        zhCN {\n          level1\n          level2\n          level3\n        }\n        idID {\n          level1\n          level2\n          level3\n        }\n        msMY {\n          level1\n          level2\n          level3\n        }\n      }\n      organisations {\n        id\n        type\n        name\n        email\n        license\n        website\n        zendeskId\n        award {\n          media {\n            type\n            url\n            urlTemplate\n            width\n            height\n            description\n            thumbnailUrl\n            mimeType\n          }\n          categories\n          status\n          url\n          type\n        }\n        description\n        estimateListsSize {\n          sale\n          rent\n          new\n        }\n        logo {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n        color\n        address {\n          formattedAddress\n          lat\n          lng\n          hideMarker\n        }\n        contact {\n          phones {\n            number\n            label\n          }\n          emails\n          bbms\n        }\n        image {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n      }\n      active\n      attributes {\n        bedroom\n        bathroom\n        landArea\n        builtUp\n        carPark\n        rate\n        furnishing\n        floorZone\n        governmentRates\n        buildingAge\n        outsideArea\n        maintenanceFee\n        maintenanceFeeByPsf\n        layout\n        landTitleType\n        tenure\n        topYear\n        aircond\n        pricePSF\n        pricePerSizeUnit\n        minimumPricePerSizeUnit\n        maximumPricePerSizeUnit\n        facingDirection\n        unitType\n        occupancy\n        titleType\n        promotion\n        highlight\n        sizeUnit\n        auctionDate\n        featureLabel\n        completionStatus\n        projectStage\n        bumiDiscount\n        totalUnits\n        completionDate\n        availableUnits\n        downloadUrl\n        agencyAdvertisingAwardSeal\n        agentAdvertisingAwardSeal\n        developerAdvertisingAwardSeal\n        youtubeId\n        threeDUrl\n        image360\n        hasImage360\n        developerName\n        buildYear\n        schoolNetwork\n        projectLicense\n        projectLicenseValidity\n        projectAdvertisingPermit\n        projectAdvertisingPermitValidity\n        projectBuildingReferenceNo\n        projectApprovalAuthorityBuildingPlan\n        projectLandEncumbrance\n        views\n        electricity\n        certificate\n        propertyCondition\n        phoneLine\n        maidRooms\n        maidBathroom\n        ensuite\n        roomType\n        builtYear\n        totalBlocks\n        totalFloors\n        buildingManagement\n        floorHeight\n        characteristicDescription\n        transportDescription\n        governmentWebsite\n        minimumStay\n        architectName\n        contractorName\n        projectType\n        budgetRange\n      }\n      listers {\n        id\n        type\n        name\n        jobTitle\n        knownLanguages\n        license\n        website\n        award {\n          media {\n            type\n            url\n            urlTemplate\n            width\n            height\n            description\n            thumbnailUrl\n            mimeType\n          }\n          categories\n          status\n          url\n          type\n        }\n        description\n        specificPlace\n        estimateListsSize {\n          sale\n          rent\n          new\n        }\n        image {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n        color\n        address {\n          formattedAddress\n          lat\n          lng\n          hideMarker\n        }\n        contact {\n          phones {\n            number\n            label\n          }\n          emails\n          bbms\n        }\n        createdAt\n      }\n      banner {\n        title\n        imageUrl\n        link\n        trackingLink\n        largeImage {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n        smallImage {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n      }\n      bankList {\n        data {\n          bank {\n            logo\n            name\n            url\n          }\n          mortgage {\n            interestRate\n            promotionInYear\n            term\n            downPayment\n          }\n        }\n      }\n    }\n    totalCount\n    nextPageToken\n    multilanguagePlaces {\n      enGB {\n        level1\n        level2\n        level3\n      }\n      idID {\n        level1\n        level2\n        level3\n      }\n      zhHK {\n        level1\n        level2\n        level3\n      }\n      zhCN {\n        level1\n        level2\n        level3\n      }\n      msMY {\n        level1\n        level2\n        level3\n      }\n      placeId\n    }\n    locationSpecialists {\n      id\n      type\n      name\n      jobTitle\n      knownLanguages\n      license\n      website\n      award {\n        media {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n        categories\n        status\n        url\n        type\n      }\n      description\n      specificPlace\n      estimateListsSize {\n        sale\n        rent\n        new\n      }\n      image {\n        type\n        url\n        urlTemplate\n        width\n        height\n        description\n        thumbnailUrl\n        mimeType\n      }\n      color\n      address {\n        formattedAddress\n        lat\n        lng\n        hideMarker\n      }\n      contact {\n        phones {\n          number\n          label\n        }\n        emails\n        bbms\n      }\n      createdAt\n      organisation {\n        id\n        type\n        name\n        email\n        license\n        website\n        zendeskId\n        award {\n          media {\n            type\n            url\n            urlTemplate\n            width\n            height\n            description\n            thumbnailUrl\n            mimeType\n          }\n          categories\n          status\n          url\n          type\n        }\n        description\n        estimateListsSize {\n          sale\n          rent\n          new\n        }\n        logo {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n        color\n        address {\n          formattedAddress\n          lat\n          lng\n          hideMarker\n        }\n        contact {\n          phones {\n            number\n            label\n          }\n          emails\n          bbms\n        }\n        image {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n      }\n    }\n    buildingSpecialists {\n      id\n      type\n      name\n      jobTitle\n      knownLanguages\n      license\n      website\n      award {\n        media {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n        categories\n        status\n        url\n        type\n      }\n      description\n      specificPlace\n      estimateListsSize {\n        sale\n        rent\n        new\n      }\n      image {\n        type\n        url\n        urlTemplate\n        width\n        height\n        description\n        thumbnailUrl\n        mimeType\n      }\n      color\n      address {\n        formattedAddress\n        lat\n        lng\n        hideMarker\n      }\n      contact {\n        phones {\n          number\n          label\n        }\n        emails\n        bbms\n      }\n      createdAt\n      organisation {\n        id\n        type\n        name\n        email\n        license\n        website\n        zendeskId\n        award {\n          media {\n            type\n            url\n            urlTemplate\n            width\n            height\n            description\n            thumbnailUrl\n            mimeType\n          }\n          categories\n          status\n          url\n          type\n        }\n        description\n        estimateListsSize {\n          sale\n          rent\n          new\n        }\n        logo {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n        color\n        address {\n          formattedAddress\n          lat\n          lng\n          hideMarker\n        }\n        contact {\n          phones {\n            number\n            label\n          }\n          emails\n          bbms\n        }\n        image {\n          type\n          url\n          urlTemplate\n          width\n          height\n          description\n          thumbnailUrl\n          mimeType\n        }\n      }\n    }\n    administrativeAreas {\n      enGB\n      zhHK\n      zhCN\n    }\n    poiSuggestions {\n      id\n      type\n      title\n      subtitle\n      label\n      multilanguagePlace {\n        enGB {\n          level1\n          level2\n          level3\n        }\n        msMY {\n          level1\n          level2\n          level3\n        }\n        zhHK {\n          level1\n          level2\n          level3\n        }\n        zhCN {\n          level1\n          level2\n          level3\n        }\n        idID {\n          level1\n          level2\n          level3\n        }\n      }\n      additionalInfo {\n        ... on SuggestionAdditionalStationInfo {\n          stops {\n            routeId\n            subType\n            routeColorCode\n            routeDisplaySequence\n            stopIsUnderConstruction\n            stopDisplaySequence\n            routeName {\n              enGB\n              msMY\n              zhHK\n              zhCN\n              idID\n            }\n            isExternalStop\n          }\n          name {\n            enGB\n            msMY\n            zhHK\n            zhCN\n            idID\n          }\n        }\n      }\n    }\n  }\n}\n'
     }
 
-    print('[2] Crawl: Listing(' + str(page_token) + '),', 'From', ref_url, flush=True)
+    print('[2] Crawl: Listing(' + str(page_token) + '),', 'From', ref_url, file=log, flush=True)
     retry_count = 0
 
     while True:
@@ -238,7 +238,7 @@ def crawl_poi(condo, category=None, ref_url=None):
         'query': 'query ($lang: AcceptLanguage, $location: String!, $radius: Int, $pageSize: Int, $category: PoiCategory) {\n  pois(location: $location, radius: $radius, pageSize: $pageSize, category: $category, lang: $lang) {\n    items {\n      name\n      subTypeLabel\n      subTypeExtra\n      geometry {\n        location {\n          lat\n          lng\n          __typename\n        }\n        __typename\n      }\n      subType\n      category\n      lineName\n      placeId\n      distance\n      distanceFloat\n      completionYear\n      type\n      city\n      district\n      publicType\n      curriculumOffered\n      __typename\n    }\n    __typename\n  }\n}\n'
     }
 
-    print('[3] Crawl: POI(' + category + '),', 'From', ref_url, flush=True)
+    print('[3] Crawl: POI(' + category + '),', 'From', ref_url, file=log, flush=True)
     retry_count = 0
 
     while True:
@@ -307,7 +307,7 @@ def crawl_transaction(condo, ref_url=None):
         'query': 'query ($location1: String!, $location2: String!, $location3: String!, $pageSize: Int, $lang: AcceptLanguage, $propertyType: String!, $buildingId: Int, $landedType: String!, $propertyCategory: String!) {\n  transactedData(location1: $location1, location2: $location2, location3: $location3, pageSize: $pageSize, lang: $lang, propertyType: $propertyType, buildingId: $buildingId, landedType: $landedType, propertyCategory: $propertyCategory) {\n    items {\n      address\n      amount\n      bedroom\n      builtUp\n      date\n      floor\n      landArea\n      propertyType\n      psfGross\n      psfNet\n      tenure\n    }\n    meta {\n      location1\n      location2\n      location3\n      title\n      additionalInfo {\n        categoryType\n        psf\n        psfCity\n        psfGrowth\n        rentalYield\n        propertyType\n        comparison\n        lastTransactedDate\n      }\n      totalCount\n    }\n  }\n}\n'
     }
 
-    print('[4] Crawl: Transaction,', 'From', ref_url, flush=True)
+    print('[4] Crawl: Transaction,', 'From', ref_url, file=log, flush=True)
     retry_count = 0
 
     while True:
@@ -334,8 +334,10 @@ def crawl_transaction(condo, ref_url=None):
     return response
 
 
-print('Program Start:', datetime.datetime.now(), flush=True)
+print('Program Start:', datetime.datetime.now(), file=log, flush=True)
 page = 1
+page_to_crawl = 90
+page_to_stop = page + page_to_crawl
 count_per_page = 20
 condo_count = count_per_page * (page - 1) + 1
 
@@ -343,8 +345,8 @@ while True:
     # Crawl Condominiums by page
     page_start_condo_count = condo_count
     page_start_time = datetime.datetime.now()
-    print(flush=True)
-    print('Page Start:', page_start_time, flush=True)
+    print(file=log, flush=True)
+    print('Page Start:', page_start_time, file=log, flush=True)
 
     response = crawl_condo(page)
     try:
@@ -353,8 +355,8 @@ while True:
     except:
         page = int(page) + 1
         e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-        print('Failed:', e, flush=True)
-        print('Failed: Skipped and proceed for next page', flush=True)
+        print('Failed:', e, file=log, flush=True)
+        print('Failed: Skipped and proceed for next page', file=log, flush=True)
         continue
 
     condo_list = list()
@@ -366,8 +368,8 @@ while True:
             page_name = format_url(condo_name) + "-" + str(condo_id)
             page_url = host + "condominiums/" + page_name
         except:
-            print('URL Search Warning:', e, flush=True)
-            print('URL Search Warning: Unable to determine Condominium ID, Name or URL. Continue ', flush=True)
+            print('URL Search Warning:', e, file=log, flush=True)
+            print('URL Search Warning: Unable to determine Condominium ID, Name or URL. Continue ', file=log, flush=True)
             condo['TryUrl'] = '-'
             condo['CondoUrl'] = '-'
         else:
@@ -376,21 +378,21 @@ while True:
                 condo['TryUrl'] = page_url
                 html = urlopen(page_url)
             except HTTPError as e:
-                print('URL Search Warning:', 'HTTP Error: ' + html.getcode(), flush=True)
-                print('URL Search Warning: Unable to determine Condominium URL. Continue ', flush=True)
+                print('URL Search Warning:', 'HTTP Error: ' + html.getcode(), file=log, flush=True)
+                print('URL Search Warning: Unable to determine Condominium URL. Continue ', file=log, flush=True)
                 condo['CondoUrl'] = '-'
             except URLError as e:
-                print('URL Search Warning: Unable to determine Condominium URL. Continue ', flush=True)
-                print('URL Search Warning:', 'Server Not Found: ' + html.getcode(), flush=True)
+                print('URL Search Warning: Unable to determine Condominium URL. Continue ', file=log, flush=True)
+                print('URL Search Warning:', 'Server Not Found: ' + html.getcode(), file=log, flush=True)
                 condo['CondoUrl'] = '-'
             else:
                 condo['CondoUrl'] = html.geturl()
 
         condo_list.append(condo)
-        print('URL Search:', condo_name, '[Try From]', condo['TryUrl'], flush=True)
-        print('URL Search:', condo_name, '[Redirect]', condo['CondoUrl'], flush=True)
+        print('URL Search:', condo_name, '[Try From]', condo['TryUrl'], file=log, flush=True)
+        print('URL Search:', condo_name, '[Redirect]', condo['CondoUrl'], file=log, flush=True)
 
-    print(flush=True)
+    print(file=log, flush=True)
 
     # Write current crawled Condominium list to file
     with open(data_directory + 'condominium/page~' + str(page) + '.json', 'w') as json_file:
@@ -399,7 +401,7 @@ while True:
     for condo in condo_list:
         condo_name = condo['Name']
         page_name = condo['PageName']
-        print('Condo [' + str(condo_count) + '=' + condo_name + '] Start:', datetime.datetime.now(), flush=True)
+        print('Condo [' + str(condo_count) + '=' + condo_name + '] Start:', datetime.datetime.now(), file=log, flush=True)
 
         # ==== Step 1 ===========================================================
         # Crawl for PlaceID using Condominium's Name from Place Suggestion
@@ -409,8 +411,8 @@ while True:
         except:
             # Skipping saving Place Suggestion to file
             e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-            print('Failed:', e, flush=True)
-            print('Failed: Skipped and proceed for next step', flush=True)
+            print('Failed:', e, file=log, flush=True)
+            print('Failed: Skipped and proceed for next step', file=log, flush=True)
         else:
             # Write Place Suggestions to file
             with open(data_directory + 'place/' + page_name + '.json', 'w') as json_file:
@@ -429,8 +431,8 @@ while True:
             except:
                 page_token = int(page_token) + 1
                 e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-                print('Failed:', e, flush=True)
-                print('Failed: Skipped and proceed for next listing page', flush=True)
+                print('Failed:', e, file=log, flush=True)
+                print('Failed: Skipped and proceed for next listing page', file=log, flush=True)
                 continue
 
             # Write listing into file
@@ -457,25 +459,25 @@ while True:
                         condo_title = condo_name + ", " + condo_city if condo_township is None \
                             else condo_name + ", " + condo_township + ", " + condo_city
 
-                        print('Listing Matching:', listing_test_url, 'vs', flush=True)
-                        print('Listing Matching:', prefix, flush=True)
+                        print('Listing Matching:', listing_test_url, 'vs', file=log, flush=True)
+                        print('Listing Matching:', prefix, file=log, flush=True)
                         print('Listing Matching:', listing_title, 'vs', condo_name + ", " + condo_city,
-                              flush=True)
+                              file=log, flush=True)
                         print('Listing Matching:',
                               '(' + str(listing_latitude) + ', ' + str(listing_longitude) + ')',
                               'vs', '(' + str(condo_latitude) + ', ' + str(condo_longitude) + ')',
-                              '=', distance, flush=True)
+                              '=', distance, file=log, flush=True)
 
                         if (listing_test_url.startswith(prefix)) \
                                 or (listing_title == condo_title and (distance < 25)):
-                            print('Listing Matching: Success', flush=True)
+                            print('Listing Matching: Success', file=log, flush=True)
                             transaction_ref_url = listing['shareLink']
                             break
 
                     except:
                         e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-                        print('Failed:', e, flush=True)
-                        print('Failed: Cannot find listing as referral URL, use Condominium page URL', flush=True)
+                        print('Failed:', e, file=log, flush=True)
+                        print('Failed: Cannot find listing as referral URL, use Condominium page URL', file=log, flush=True)
 
             page_token = next_page_token
             if page_token is None:
@@ -493,8 +495,8 @@ while True:
                 poi_list = poi_list + response['data']['pois']['items']
             except:
                 e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-                print('Failed:', e, flush=True)
-                print('Failed: Skipped and proceed for next POI category', flush=True)
+                print('Failed:', e, file=log, flush=True)
+                print('Failed: Skipped and proceed for next POI category', file=log, flush=True)
                 continue
 
         # Write Transactions into file
@@ -512,8 +514,8 @@ while True:
             investment['page_name'] = page_name
         except:
             e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-            print('Failed:', e, flush=True)
-            print('Failed: Skipped and proceed for next step', flush=True)
+            print('Failed:', e, file=log, flush=True)
+            print('Failed: Skipped and proceed for next step', file=log, flush=True)
         else:
             # Write Transactions into file
             with open(data_directory + 'transaction/' + page_name + '.json', 'w') as json_file:
@@ -522,18 +524,18 @@ while True:
             with open(data_directory + 'investment/' + page_name + '.json', 'w') as json_file:
                 json.dump(investment, json_file)
 
-        print('Condo End:', datetime.datetime.now(), flush=True)
+        print('Condo End:', datetime.datetime.now(), file=log, flush=True)
         condo_count = condo_count + 1
-        print(flush=True)
+        print(file=log, flush=True)
 
     page_end_time = datetime.datetime.now()
-    print('Page Summary:', 'Condominiums Crawled:', str(condo_count - page_start_condo_count), flush=True)
-    print('Page Summary:', 'Time Elapsed:', page_end_time - page_start_time, flush=True)
-    print('Page End:', page_end_time, flush=True)
+    print('Page Summary:', 'Condominiums Crawled:', str(condo_count - page_start_condo_count), file=log, flush=True)
+    print('Page Summary:', 'Time Elapsed:', page_end_time - page_start_time, file=log, flush=True)
+    print('Page End:', page_end_time, file=log, flush=True)
     page = next_page
 
-    if page is None or page > total_pages:
+    if page is None or page > total_pages or page > page_to_stop:
         break
 
-print(flush=True)
-print('Program End:', datetime.datetime.now(), flush=True)
+print(file=log, flush=True)
+print('Program End:', datetime.datetime.now(), file=log, flush=True)
