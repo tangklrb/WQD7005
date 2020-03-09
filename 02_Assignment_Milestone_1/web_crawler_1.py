@@ -10,7 +10,7 @@ from geopy.distance import geodesic
 from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
 
-data_directory = 'data/'
+data_directory = 'data_1/'
 host = 'https://www.iproperty.com.my/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
 log = open('web_crawler_1.txt', 'a+')
@@ -18,8 +18,8 @@ max_crawl_retry = 5
 
 
 def cool_down(min_sec=1, max_sec=5):
-    crawl_interval = random.randint(min_sec * random.randint(2, 3), max_sec * random.randint(5, 7))
-    # print('Cooldown:', crawl_interval, 'seconds', file=log, flush=True)
+    crawl_interval = random.randint(min_sec * random.randint(2, 3), max_sec * random.randint(4, 5))
+    # print('Cooldown:', str(crawl_interval), 'seconds', file=log, flush=True)
     time.sleep(crawl_interval)
 
 
@@ -58,13 +58,13 @@ def crawl_condo(page):
             request.raise_for_status()
             response = request.json()
         except requests.exceptions.HTTPError as errh:
-            print('Http Error:', errh, '[Retry ' + retry_count + ']')
+            print('Http Error:', errh, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.ConnectionError as errc:
-            print('Error Connecting:', errc, '[Retry ' + retry_count + ']')
+            print('Error Connecting:', errc, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.Timeout as errt:
-            print('Timeout Error:', errt, '[Retry ' + retry_count + ']')
+            print('Timeout Error:', errt, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.RequestException as err:
-            print('Unknown Error:', err, '[Retry ' + retry_count + ']')
+            print('Unknown Error:', err, '[Retry ' + str(retry_count) + ']')
         else:
             return response
 
@@ -107,7 +107,6 @@ def crawl_place(condo):
 
     while True:
         retry_count = retry_count + 1
-
         if retry_count >= max_crawl_retry:
             return None
 
@@ -116,13 +115,13 @@ def crawl_place(condo):
             request.raise_for_status()
             response = request.json()
         except requests.exceptions.HTTPError as errh:
-            print('Http Error:', errh, '[Retry ' + retry_count + ']')
+            print('Http Error:', errh, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.ConnectionError as errc:
-            print('Error Connecting:', errc, '[Retry ' + retry_count + ']')
+            print('Error Connecting:', errc, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.Timeout as errt:
-            print('Timeout Error:', errt, '[Retry ' + retry_count + ']')
+            print('Timeout Error:', errt, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.RequestException as err:
-            print('Unknown Error:', err, '[Retry ' + retry_count + ']')
+            print('Unknown Error:', err, '[Retry ' + str(retry_count) + ']')
         else:
             return response
 
@@ -130,7 +129,7 @@ def crawl_place(condo):
 
 
 def crawl_listing(condo, page_token=1):
-    # cool_down(1, 2)
+    cool_down(1, 2)
     api = reaasia_graphql_api
     param_page = '' if page_token == 1 else '&page=' + str(page_token)
     ref_url = host + 'sale/' + format_url(condo['PropertyType']) + '/?q=' + urllib.parse.quote(
@@ -183,7 +182,6 @@ def crawl_listing(condo, page_token=1):
 
     while True:
         retry_count = retry_count + 1
-
         if retry_count >= max_crawl_retry:
             return None
 
@@ -192,13 +190,13 @@ def crawl_listing(condo, page_token=1):
             request.raise_for_status()
             response = request.json()
         except requests.exceptions.HTTPError as errh:
-            print('Http Error:', errh, '[Retry ' + retry_count + ']')
+            print('Http Error:', errh, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.ConnectionError as errc:
-            print('Error Connecting:', errc, '[Retry ' + retry_count + ']')
+            print('Error Connecting:', errc, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.Timeout as errt:
-            print('Timeout Error:', errt, '[Retry ' + retry_count + ']')
+            print('Timeout Error:', errt, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.RequestException as err:
-            print('Unknown Error:', err, '[Retry ' + retry_count + ']')
+            print('Unknown Error:', err, '[Retry ' + str(retry_count) + ']')
         else:
             return response
 
@@ -243,7 +241,6 @@ def crawl_poi(condo, category=None, ref_url=None):
 
     while True:
         retry_count = retry_count + 1
-
         if retry_count >= max_crawl_retry:
             return None
 
@@ -252,13 +249,13 @@ def crawl_poi(condo, category=None, ref_url=None):
             request.raise_for_status()
             response = request.json()
         except requests.exceptions.HTTPError as errh:
-            print('Http Error:', errh, '[Retry ' + retry_count + ']')
+            print('Http Error:', errh, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.ConnectionError as errc:
-            print('Error Connecting:', errc, '[Retry ' + retry_count + ']')
+            print('Error Connecting:', errc, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.Timeout as errt:
-            print('Timeout Error:', errt, '[Retry ' + retry_count + ']')
+            print('Timeout Error:', errt, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.RequestException as err:
-            print('Unknown Error:', err, '[Retry ' + retry_count + ']')
+            print('Unknown Error:', err, '[Retry ' + str(retry_count) + ']')
         else:
             return response
 
@@ -312,7 +309,6 @@ def crawl_transaction(condo, ref_url=None):
 
     while True:
         retry_count = retry_count + 1
-
         if retry_count >= max_crawl_retry:
             return None
 
@@ -321,13 +317,13 @@ def crawl_transaction(condo, ref_url=None):
             request.raise_for_status()
             response = request.json()
         except requests.exceptions.HTTPError as errh:
-            print('Http Error:', errh, '[Retry ' + retry_count + ']')
+            print('Http Error:', errh, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.ConnectionError as errc:
-            print('Error Connecting:', errc, '[Retry ' + retry_count + ']')
+            print('Error Connecting:', errc, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.Timeout as errt:
-            print('Timeout Error:', errt, '[Retry ' + retry_count + ']')
+            print('Timeout Error:', errt, '[Retry ' + str(retry_count) + ']')
         except requests.exceptions.RequestException as err:
-            print('Unknown Error:', err, '[Retry ' + retry_count + ']')
+            print('Unknown Error:', err, '[Retry ' + str(retry_count) + ']')
         else:
             return response
 
@@ -336,7 +332,7 @@ def crawl_transaction(condo, ref_url=None):
 
 print('Program Start:', datetime.datetime.now(), file=log, flush=True)
 page = 1
-page_to_crawl = 90
+page_to_crawl = 999
 page_to_stop = page + page_to_crawl
 count_per_page = 20
 condo_count = count_per_page * (page - 1) + 1
@@ -355,8 +351,8 @@ while True:
     except:
         page = int(page) + 1
         e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-        print('Failed:', e, file=log, flush=True)
-        print('Failed: Skipped and proceed for next page', file=log, flush=True)
+        print('Error:', e, file=log, flush=True)
+        print('Error: Skipped and proceed for next page', file=log, flush=True)
         continue
 
     condo_list = list()
@@ -378,12 +374,12 @@ while True:
                 condo['TryUrl'] = page_url
                 html = urlopen(page_url)
             except HTTPError as e:
-                print('URL Search Warning:', 'HTTP Error: ' + html.getcode(), file=log, flush=True)
+                print('URL Search Warning:', 'HTTP Error: ' + str(html.getcode()), file=log, flush=True)
                 print('URL Search Warning: Unable to determine Condominium URL. Continue ', file=log, flush=True)
                 condo['CondoUrl'] = '-'
             except URLError as e:
+                print('URL Search Warning:', 'Server Not Found: ' + str(html.getcode()), file=log, flush=True)
                 print('URL Search Warning: Unable to determine Condominium URL. Continue ', file=log, flush=True)
-                print('URL Search Warning:', 'Server Not Found: ' + html.getcode(), file=log, flush=True)
                 condo['CondoUrl'] = '-'
             else:
                 condo['CondoUrl'] = html.geturl()
@@ -411,8 +407,8 @@ while True:
         except:
             # Skipping saving Place Suggestion to file
             e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-            print('Failed:', e, file=log, flush=True)
-            print('Failed: Skipped and proceed for next step', file=log, flush=True)
+            print('Error:', e, file=log, flush=True)
+            print('Error: Skipped and proceed for next step', file=log, flush=True)
         else:
             # Write Place Suggestions to file
             with open(data_directory + 'place/' + page_name + '.json', 'w') as json_file:
@@ -431,8 +427,8 @@ while True:
             except:
                 page_token = int(page_token) + 1
                 e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-                print('Failed:', e, file=log, flush=True)
-                print('Failed: Skipped and proceed for next listing page', file=log, flush=True)
+                print('Error:', e, file=log, flush=True)
+                print('Error: Skipped and proceed for next listing page', file=log, flush=True)
                 continue
 
             # Write listing into file
@@ -466,7 +462,7 @@ while True:
                         print('Listing Matching:',
                               '(' + str(listing_latitude) + ', ' + str(listing_longitude) + ')',
                               'vs', '(' + str(condo_latitude) + ', ' + str(condo_longitude) + ')',
-                              '=', distance, file=log, flush=True)
+                              '=', str(distance) + 'm', file=log, flush=True)
 
                         if (listing_test_url.startswith(prefix)) \
                                 or (listing_title == condo_title and (distance < 25)):
@@ -476,8 +472,8 @@ while True:
 
                     except:
                         e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-                        print('Failed:', e, file=log, flush=True)
-                        print('Failed: Cannot find listing as referral URL, use Condominium page URL', file=log, flush=True)
+                        print('Error:', e, file=log, flush=True)
+                        print('Error: Cannot find listing as referral URL, use Condominium page URL', file=log, flush=True)
 
             page_token = next_page_token
             if page_token is None:
@@ -495,8 +491,8 @@ while True:
                 poi_list = poi_list + response['data']['pois']['items']
             except:
                 e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-                print('Failed:', e, file=log, flush=True)
-                print('Failed: Skipped and proceed for next POI category', file=log, flush=True)
+                print('Error:', e, file=log, flush=True)
+                print('Error: Skipped and proceed for next POI category', file=log, flush=True)
                 continue
 
         # Write Transactions into file
@@ -514,8 +510,8 @@ while True:
             investment['page_name'] = page_name
         except:
             e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
-            print('Failed:', e, file=log, flush=True)
-            print('Failed: Skipped and proceed for next step', file=log, flush=True)
+            print('Error:', e, file=log, flush=True)
+            print('Error: Skipped and proceed for next step', file=log, flush=True)
         else:
             # Write Transactions into file
             with open(data_directory + 'transaction/' + page_name + '.json', 'w') as json_file:
@@ -530,8 +526,8 @@ while True:
 
     page_end_time = datetime.datetime.now()
     print('Page Summary:', 'Condominiums Crawled:', str(condo_count - page_start_condo_count), file=log, flush=True)
-    print('Page Summary:', 'Time Elapsed:', page_end_time - page_start_time, file=log, flush=True)
-    print('Page End:', page_end_time, file=log, flush=True)
+    print('Page Summary:', 'Time Elapsed:', str(page_end_time - page_start_time), file=log, flush=True)
+    print('Page End:', str(page_end_time), file=log, flush=True)
     page = next_page
 
     if page is None or page > total_pages or page > page_to_stop:
