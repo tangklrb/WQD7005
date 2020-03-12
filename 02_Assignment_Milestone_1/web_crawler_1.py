@@ -10,10 +10,10 @@ from geopy.distance import geodesic
 from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
 
-data_directory = 'data_2/'
+data_directory = 'data/'
 host = 'https://www.iproperty.com.my/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
-log = open('web_crawler_2.txt', 'a+')
+log = open('web_crawler_1.log', 'a+')
 max_crawl_retry = 5
 
 
@@ -23,7 +23,7 @@ def cool_down(min_sec=1, max_sec=5):
     time.sleep(crawl_interval)
 
 
-def format_url(input_string):
+def guess_slug_format(input_string):
     return re.sub('[&\/\\#,+()$~%.\'":*?<>{}]', '', re.sub('[‘’“” ]', '-', input_string.strip().lower()))
 
 
@@ -74,7 +74,7 @@ def crawl_condo(page):
 def crawl_place(condo):
     # cool_down()
     api = reaasia_graphql_api
-    ref_url = host + 'sale/' + format_url(condo['PropertyType']) + '/?q=' + urllib.parse.quote(condo['Name'])
+    ref_url = host + 'sale/' + guess_slug_format(condo['PropertyType']) + '/?q=' + urllib.parse.quote(condo['Name'])
 
     headers = {
         'accept': '*/*',
@@ -129,7 +129,7 @@ def crawl_place(condo):
 
 
 def crawl_listing(place_ids, ref_url, page_token=1):
-    cool_down(1, 3)
+    # cool_down(1, 3)
     api = reaasia_graphql_api
     param_page = '' if page_token == 1 else '&page=' + str(page_token)
     ref_url = ref_url + param_page
@@ -362,7 +362,7 @@ while True:
         try:
             condo_id = condo['Id']
             condo_name = str(condo['Name'])
-            condo_page_name = format_url(condo_name) + "-" + str(condo_id)
+            condo_page_name = guess_slug_format(condo_name) + "-" + str(condo_id)
             condo_page_url = host + "condominiums/" + condo_page_name
         except:
             print('Error:', e, file=log, flush=True)
@@ -374,7 +374,7 @@ while True:
         else:
             try:
                 condo_property_type = str(condo['PropertyType'])
-                condo['SalesQueryUrl'] = host + 'sale/' + format_url(condo_property_type) + '/?q=' + urllib.parse.quote(condo_name)
+                condo['SalesQueryUrl'] = host + 'sale/' + guess_slug_format(condo_property_type) + '/?q=' + urllib.parse.quote(condo_name)
                 condo['PageName'] = condo_page_name
                 condo['PageUrl1'] = condo_page_url
                 html = urlopen(condo_page_url)
@@ -481,7 +481,7 @@ while True:
                         condo_longitude = condo['Longitude']
                         condo_coordinate = (condo_latitude, condo_longitude)
                         distance = geodesic(listing_coordinate, condo_coordinate).meters
-                        prefix = host + 'property/' + format_url(condo_city) + '/' + format_url(condo_name)
+                        prefix = host + 'property/' + guess_slug_format(condo_city) + '/' + guess_slug_format(condo_name)
                         prefix = re.sub('[-@]', '', prefix)
                         listing_title = listing['title']
                         listing_test_url = re.sub('[-@]', '', listing['shareLink'])
@@ -568,3 +568,4 @@ while True:
 
 print(file=log, flush=True)
 print('Program End:', datetime.datetime.now(), file=log, flush=True)
+
