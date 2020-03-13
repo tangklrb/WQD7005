@@ -199,7 +199,7 @@ try:
                     last_crawl = crawl_datetime[crawl_datetime['id'] == level_2['id'].strip()]
                     last_crawl = last_crawl.iloc[-1] if len(last_crawl) > 0 else None
                     last_crawl_datetime = datetime.datetime.strptime('1900-01-01', "%Y-%m-%d") if last_crawl is None else \
-                        datetime.datetime.strptime(last_crawl['end'].strip(), '%Y-%m-%d %H:%M:%S')
+                        datetime.datetime.strptime(last_crawl['last'].strip(), '%Y-%m-%d %H:%M:%S')
                     current_crawl_last = None
                     current_crawl_first = None
                     done = False
