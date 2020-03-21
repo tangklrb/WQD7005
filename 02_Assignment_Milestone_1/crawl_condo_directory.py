@@ -10,10 +10,10 @@ from geopy.distance import geodesic
 from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
 
-data_directory = 'data/'
+data_directory = 'data/crawl_condo_directory/'
 host = 'https://www.iproperty.com.my/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
-log = open('web_crawler_1.log', 'a+')
+log = open('crawl_condo_directory.log', 'a+')
 max_crawl_retry = 5
 
 
