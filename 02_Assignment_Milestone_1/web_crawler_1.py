@@ -439,6 +439,7 @@ while True:
     with open(data_directory + 'condominium/page~' + str(page) + '.json', 'w') as json_file:
         json.dump(condo_list, json_file)
 
+    # ==== Step C ===========================================================
     for condo in condo_list:
         condo_name = condo['Name']
         condo_page_name = condo['PageName']

@@ -144,14 +144,15 @@ def crawl_listing(place_ids, place_slug, page_token=1):
 
 
 max_page = 100
+session_interval = 3600
 print('Program Start:', datetime.datetime.now(), file=log, flush=True)
 
 try:
     while True:
         print(file=log, flush=True)
         session_start_time = datetime.datetime.now()
-        print('Page Start:', session_start_time, file=log, flush=True)
         session_datetime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        print('Round Start:', session_start_time, file=log, flush=True)
 
         # crawl level 1 places
         response = crawl_place()
@@ -197,16 +198,17 @@ try:
                     level_2_title = level_2['title'].strip()
                     level_2_slug = guess_slug_format(level_2['title'].strip())
                     last_crawl = crawl_datetime[crawl_datetime['id'] == level_2['id'].strip()]
-                    last_crawl = last_crawl.iloc[-1] if len(last_crawl) > 0 else None
-                    last_crawl_datetime = datetime.datetime.strptime('1900-01-01', "%Y-%m-%d") if last_crawl is None else \
-                        datetime.datetime.strptime(last_crawl['last'].strip(), '%Y-%m-%d %H:%M:%S')
+                    last_crawl = last_crawl.iloc[-1] if last_crawl.shape[0] > 0 else None
+                    last_crawl_datetime = datetime.datetime.strptime('1900-01-01 00:00:00', "%Y-%m-%d %H:%M:%S") \
+                        if last_crawl is None or last_crawl['last'] is None \
+                        else datetime.datetime.strptime(last_crawl['last'].strip(), '%Y-%m-%d %H:%M:%S')
                     current_crawl_last = None
                     current_crawl_first = None
                     done = False
                 except:
                     e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
                     print('Error:', e, file=log, flush=True)
-                    print('Error: Unable to fetch level 1 place title, skip to next place', file=log, flush=True)
+                    print('Error: Unable to fetch level 2 place details, skip to next place', file=log, flush=True)
                     continue
 
                 transaction_ref_url = None
@@ -232,8 +234,10 @@ try:
                             listing_date = datetime.datetime.strptime(
                                 re.sub('[TZtz]', ' ', listing['updatedAt']).strip(), '%Y-%m-%d %H:%M:%S'
                             )
-                            if last_crawl_datetime > listing_date:
+
+                            if last_crawl_datetime >= listing_date:
                                 done = True
+                                break
                             else:
                                 current_crawl_last = listing_date if current_crawl_last is None else current_crawl_last
                                 current_crawl_first = listing_date
@@ -254,22 +258,31 @@ try:
                         break
 
                 # Write listing into file
-                with open(data_directory + 'listing_by_place/' + level_2_slug + '_' + str(session_datetime) + '.json',
-                          'w') as json_file:
-                    json.dump(listing_list, json_file)
+                if len(current_listing) > 0:
+                    print(len(current_listing), 'new listing for', place_id)
+                    with open(data_directory + 'listing_by_place/' + place_id + '_' + level_2_slug + '_' +
+                              str(session_datetime) + '.json', 'w') as json_file:
+                        json.dump(current_listing, json_file)
 
-                with open('data/crawl_datetime.csv', 'a') as f:
-                    f.write(
-                        str(place_id) + ',' + str(level_1_title) + ',' + str(level_2_title) + ',' +
-                        str(current_crawl_first) + ',' + str(current_crawl_last) + '\n'
-                    )
+                    with open('data/crawl_datetime.csv', 'a') as f:
+                        f.write(
+                            str(place_id) + ',' + str(level_1_title) + ',' + str(level_2_title) + ',' +
+                            str(current_crawl_first) + ',' + str(current_crawl_last) + '\n'
+                        )
+                else:
+                    print('No new listing for', place_id)
 
-        page_end_time = datetime.datetime.now()
-        print('Page Summary:', 'Time Elapsed:', str(page_end_time - page_start_time), file=log, flush=True)
-        print('Page End:', str(page_end_time), file=log, flush=True)
+        session_end_time = datetime.datetime.now()
+        print('Round Summary:', 'Time Elapsed:', str(session_end_time - session_start_time), file=log, flush=True)
+        print('Round End:', str(session_end_time), file=log, flush=True)
 
-        # Next round after 1 hour
-        time.sleep(3600)
+        print(file=log, flush=True)
+        print('Next Round in:', time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(session_interval)),
+              file=log, flush=True)
+
+        # Next round after the defined interval
+        time.sleep(session_interval)
+
 except KeyboardInterrupt:
     print('Interrupted by user while waiting for next crawl.', file=log, flush=True)
 
