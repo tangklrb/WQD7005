@@ -30,6 +30,9 @@ try:
 
     # read all json files crawled in milestone 1
     for listing_file in os.listdir(listing_dir):
+        if listing_file == 'readme.txt':
+            continue
+
         with open(os.path.join(listing_dir, listing_file)) as json_file:
             current_listing = json.load(json_file)
 
