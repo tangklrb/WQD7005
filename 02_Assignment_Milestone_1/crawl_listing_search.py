@@ -319,7 +319,7 @@ try:
                 # write listing into file
                 if len(current_listing) > 0:
                     print(len(current_listing), 'new listing for', place_id)
-                    with open(data_directory + 'listing/' + place_id + '_' + level_2_slug + '_' +
+                    with open(data_directory + 'existing_listing/' + place_id + '_' + level_2_slug + '_' +
                               str(session_datetime) + '.json', 'w') as json_file:
                         json.dump(current_listing, json_file)
 
@@ -354,7 +354,7 @@ try:
                                 except:
                                     e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
                                     print('Error:', e, file=log, flush=True)
-                                    print('Error: Skipped and proceed for next POI category', file=log, flush=True)
+                                    print('Error: Failed to get POI for', listing_id, category, file=log, flush=True)
                                     continue
 
                                 with open(data_directory + 'poi/' + listing_id + '_' + category + '_' +
