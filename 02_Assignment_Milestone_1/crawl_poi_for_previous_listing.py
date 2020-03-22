@@ -5,7 +5,7 @@ import traceback
 import requests
 import datetime
 
-data_directory = 'data/crawl_listing_search/'
+data_directory = '../data/crawl_listing_search/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
 log = open('crawl_listing_search.log', 'a+')
 max_crawl_retry = 5
@@ -71,7 +71,7 @@ program_start_time = datetime.datetime.now()
 print('Program Start:', program_start_time, file=log, flush=True)
 
 try:
-    listing_dir = data_directory + 'listing/' + sub_dir
+    listing_dir = data_directory + 'existing_listing/' + sub_dir
     crawled_listing_dir = data_directory + 'crawled_listing'
     for listing_file in os.listdir(listing_dir):
         with open(os.path.join(listing_dir, listing_file)) as json_file:

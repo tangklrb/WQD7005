@@ -3,12 +3,11 @@ import sys
 import time
 import json
 import traceback
-
 import requests
 import datetime
 import pandas as pd
 
-data_directory = 'data/crawl_listing_search/'
+data_directory = '../data/crawl_listing_search/'
 host = 'https://www.iproperty.com.my/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
 log = open('crawl_listing_search.log', 'a+')
@@ -319,15 +318,9 @@ try:
                 # write listing into file
                 if len(current_listing) > 0:
                     print(len(current_listing), 'new listing for', place_id)
-                    with open(data_directory + 'existing_listing/' + place_id + '_' + level_2_slug + '_' +
+                    with open(data_directory + 'listing/' + place_id + '_' + level_2_slug + '_' +
                               str(session_datetime) + '.json', 'w') as json_file:
                         json.dump(current_listing, json_file)
-
-                    with open(data_directory + 'crawl_datetime.csv', 'a') as f:
-                        f.write(
-                            str(place_id) + ',' + str(level_1_title) + ',' + str(level_2_title) + ',' +
-                            str(current_crawl_first) + ',' + str(current_crawl_last) + '\n'
-                        )
 
                     for listing in current_listing:
                         try:
@@ -367,6 +360,12 @@ try:
                             print('Error:', e, file=log, flush=True)
                             print('Error: Failed to get listing information', file=log, flush=True)
                             traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+
+                    with open(data_directory + 'crawl_datetime.csv', 'a') as f:
+                        f.write(
+                            str(place_id) + ',' + str(level_1_title) + ',' + str(level_2_title) + ',' +
+                            str(current_crawl_first) + ',' + str(current_crawl_last) + '\n'
+                        )
                 else:
                     print('No new listing for', place_id)
 
