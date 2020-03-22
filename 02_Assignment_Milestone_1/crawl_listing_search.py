@@ -2,14 +2,16 @@ import re
 import sys
 import time
 import json
+import traceback
+
 import requests
 import datetime
 import pandas as pd
 
-data_directory = 'data/'
+data_directory = 'data/crawl_listing_search/'
 host = 'https://www.iproperty.com.my/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
-log = open('web_crawler_2.log', 'a+')
+log = open('crawl_listing_search.log', 'a+')
 max_crawl_retry = 5
 
 
@@ -143,15 +145,73 @@ def crawl_listing(place_ids, place_slug, page_token=1):
     return response
 
 
+def crawl_poi(gps_coordinate, category=None, ref_url=None):
+    # cool_down()
+    api = reaasia_graphql_api
+
+    headers = {
+        'accept': '*/*',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'en-GB',
+        'content-type': 'application/json',
+        'market': 'MY',
+        'origin': 'https://www.iproperty.com.my',
+        'referer': ref_url,
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'cross-site',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
+        'x-market': 'ipropertymy'
+    }
+
+    page_size = 100
+    payload = {
+        'operationName': None,
+        'variables': {
+            'lang': 'enGB',
+            'location': str(gps_coordinate['Latitude']) + ',' + str(gps_coordinate['Longitude']),
+            'radius': 3000,
+            'pageSize': page_size,
+            'category': category
+        },
+        'query': 'query ($lang: AcceptLanguage, $location: String!, $radius: Int, $pageSize: Int, $category: PoiCategory) {\n  pois(location: $location, radius: $radius, pageSize: $pageSize, category: $category, lang: $lang) {\n    items {\n      name\n      subTypeLabel\n      subTypeExtra\n      geometry {\n        location {\n          lat\n          lng\n          __typename\n        }\n        __typename\n      }\n      subType\n      category\n      lineName\n      placeId\n      distance\n      distanceFloat\n      completionYear\n      type\n      city\n      district\n      publicType\n      curriculumOffered\n      __typename\n    }\n    __typename\n  }\n}\n'
+    }
+
+    print('Crawl: POI(' + category + '),', 'From', ref_url, file=log, flush=True)
+    retry_count = 0
+
+    while True:
+        retry_count = retry_count + 1
+        if retry_count >= max_crawl_retry:
+            return None
+
+        try:
+            request = requests.post(api, headers=headers, data=json.dumps(payload), timeout=30)
+            request.raise_for_status()
+            response = request.json()
+        except requests.exceptions.HTTPError as errh:
+            print('Http Error:', errh, '[Retry ' + str(retry_count) + ']')
+        except requests.exceptions.ConnectionError as errc:
+            print('Error Connecting:', errc, '[Retry ' + str(retry_count) + ']')
+        except requests.exceptions.Timeout as errt:
+            print('Timeout Error:', errt, '[Retry ' + str(retry_count) + ']')
+        except requests.exceptions.RequestException as err:
+            print('Unknown Error:', err, '[Retry ' + str(retry_count) + ']')
+        else:
+            return response
+
+    return response
+
+
 max_page = 100
+session_interval = 3600
 print('Program Start:', datetime.datetime.now(), file=log, flush=True)
 
 try:
     while True:
         print(file=log, flush=True)
         session_start_time = datetime.datetime.now()
-        print('Page Start:', session_start_time, file=log, flush=True)
         session_datetime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        print('Round Start:', session_start_time, file=log, flush=True)
 
         # crawl level 1 places
         response = crawl_place()
@@ -185,7 +245,7 @@ try:
                 print('Error: Unable to fetch level 2 places, skip to next level 1 place', file=log, flush=True)
                 continue
 
-            crawl_datetime = pd.read_csv('data/crawl_datetime.csv', delimiter=',')
+            crawl_datetime = pd.read_csv(data_directory + 'crawl_datetime.csv', delimiter=',')
 
             # if level 2 places is successful
             for level_2 in level_2_places:
@@ -197,16 +257,17 @@ try:
                     level_2_title = level_2['title'].strip()
                     level_2_slug = guess_slug_format(level_2['title'].strip())
                     last_crawl = crawl_datetime[crawl_datetime['id'] == level_2['id'].strip()]
-                    last_crawl = last_crawl.iloc[-1] if len(last_crawl) > 0 else None
-                    last_crawl_datetime = datetime.datetime.strptime('1900-01-01', "%Y-%m-%d") if last_crawl is None else \
-                        datetime.datetime.strptime(last_crawl['last'].strip(), '%Y-%m-%d %H:%M:%S')
+                    last_crawl = last_crawl.iloc[-1] if last_crawl.shape[0] > 0 else None
+                    last_crawl_datetime = datetime.datetime.strptime('1900-01-01 00:00:00', "%Y-%m-%d %H:%M:%S") \
+                        if last_crawl is None or last_crawl['last'] is None \
+                        else datetime.datetime.strptime(last_crawl['last'].strip(), '%Y-%m-%d %H:%M:%S')
                     current_crawl_last = None
                     current_crawl_first = None
                     done = False
                 except:
                     e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
                     print('Error:', e, file=log, flush=True)
-                    print('Error: Unable to fetch level 1 place title, skip to next place', file=log, flush=True)
+                    print('Error: Unable to fetch level 2 place details, skip to next place', file=log, flush=True)
                     continue
 
                 transaction_ref_url = None
@@ -232,8 +293,10 @@ try:
                             listing_date = datetime.datetime.strptime(
                                 re.sub('[TZtz]', ' ', listing['updatedAt']).strip(), '%Y-%m-%d %H:%M:%S'
                             )
-                            if last_crawl_datetime > listing_date:
+
+                            if last_crawl_datetime >= listing_date:
                                 done = True
+                                break
                             else:
                                 current_crawl_last = listing_date if current_crawl_last is None else current_crawl_last
                                 current_crawl_first = listing_date
@@ -253,25 +316,73 @@ try:
                     if page_token is None or page_token > max_page:
                         break
 
-                # Write listing into file
-                with open(data_directory + 'listing_by_place/' + level_2_slug + '_' + str(session_datetime) + '.json',
-                          'w') as json_file:
-                    json.dump(listing_list, json_file)
+                # write listing into file
+                if len(current_listing) > 0:
+                    print(len(current_listing), 'new listing for', place_id)
+                    with open(data_directory + 'existing_listing/' + place_id + '_' + level_2_slug + '_' +
+                              str(session_datetime) + '.json', 'w') as json_file:
+                        json.dump(current_listing, json_file)
 
-                with open('data/crawl_datetime.csv', 'a') as f:
-                    f.write(
-                        str(place_id) + ',' + str(level_1_title) + ',' + str(level_2_title) + ',' +
-                        str(current_crawl_first) + ',' + str(current_crawl_last) + '\n'
-                    )
+                    with open(data_directory + 'crawl_datetime.csv', 'a') as f:
+                        f.write(
+                            str(place_id) + ',' + str(level_1_title) + ',' + str(level_2_title) + ',' +
+                            str(current_crawl_first) + ',' + str(current_crawl_last) + '\n'
+                        )
 
-        page_end_time = datetime.datetime.now()
-        print('Page Summary:', 'Time Elapsed:', str(page_end_time - page_start_time), file=log, flush=True)
-        print('Page End:', str(page_end_time), file=log, flush=True)
+                    for listing in current_listing:
+                        try:
+                            listing_id = listing['id']
+                            listing_url = listing['shareLink']
+                            listing_gps_coordinate = {
+                                'Latitude': listing['address']['lat'],
+                                'Longitude': listing['address']['lng']
+                            }
 
-        # Next round after 1 hour
-        time.sleep(3600)
+                            if listing['address']['lat'] is None or listing['address']['lng'] is None:
+                                print('Skipped:', listing_url, file=log, flush=True)
+                                print('Reason: Invalid GPS Coordinates', listing_gps_coordinate, file=log, flush=True)
+                                continue
+
+                            # crawl POIs by listing
+                            poi_categories = ['education', 'healthcare', 'transportation']
+
+                            for category in poi_categories:
+                                poi_list = list()
+                                response = crawl_poi(listing_gps_coordinate, category, listing_url)
+                                try:
+                                    poi_list = poi_list + response['data']['pois']['items']
+                                except:
+                                    e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
+                                    print('Error:', e, file=log, flush=True)
+                                    print('Error: Failed to get POI for', listing_id, category, file=log, flush=True)
+                                    continue
+
+                                with open(data_directory + 'poi/' + listing_id + '_' + category + '_' +
+                                          str(session_datetime) + '.json', 'w') as json_file:
+                                    json.dump(poi_list, json_file)
+
+                        except:
+                            e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
+                            exc_type, exc_value, exc_traceback = sys.exc_info()
+                            print('Error:', e, file=log, flush=True)
+                            print('Error: Failed to get listing information', file=log, flush=True)
+                            traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+                else:
+                    print('No new listing for', place_id)
+
+        session_end_time = datetime.datetime.now()
+        print('Round Summary:', 'Time Elapsed:', str(session_end_time - session_start_time), file=log, flush=True)
+        print('Round End:', str(session_end_time), file=log, flush=True)
+
+        print(file=log, flush=True)
+        print('Next Round in:', time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(session_interval)),
+              file=log, flush=True)
+
+        # Next round after the defined interval
+        time.sleep(session_interval)
+
 except KeyboardInterrupt:
-    print('Interrupted by user while waiting for next crawl.', file=log, flush=True)
+    print('Interrupted by user.', file=log, flush=True)
 
 print(file=log, flush=True)
 print('Program End:', datetime.datetime.now(), file=log, flush=True)
