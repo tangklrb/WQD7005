@@ -12,3 +12,7 @@ Student: Tang Kit Lim (WQD190032)
 Data - https://drive.google.com/open?id=1iXLnu5UG6mXjpYlogF-Or5seVN3FJkzR
 
 Presentation - https://youtu.be/YwNJ83fOkHY
+
+### Milestone 2
+
+Presentation - https://youtu.be/JWKdoQcLpoQ
