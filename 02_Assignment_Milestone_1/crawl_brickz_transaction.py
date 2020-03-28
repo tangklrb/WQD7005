@@ -53,14 +53,16 @@ transactions_headers = {
                   'Safari/537.36 '
 }
 
-townships_url = 'https://www.brickz.my/transactions/residential/page/1/?range=1992+JAN-'
+page = 1
+townships_url = 'https://www.brickz.my/transactions/residential/page/{}/?range=1992+JAN-'
+townships_url = townships_url.format(str(page))
 
 while True:
     request = requests.get(townships_url, headers=townships_headers)
     response = request.text
 
     uri = townships_url.strip().replace('https://www.brickz.my/transactions/residential/', '').split('/')
-    print('-- Page:', uri[1], '--')
+    print('-- Page', uri[1], ':', townships_url, '--')
 
     town_page_html = BeautifulSoup(response, 'html.parser')
     township_rows = town_page_html.find_all('tr', attrs={'itemtype': 'https://schema.org/AdministrativeArea'})
@@ -103,7 +105,7 @@ while True:
         browser.add_cookie({'name': '_gid', 'value': 'A1.3.1148108848.1585155670'})
         browser.refresh()
 
-        delay = 10
+        delay = 30
         try:
             myElem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'gmnoscreen')))
         except TimeoutException:
