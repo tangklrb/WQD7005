@@ -122,7 +122,7 @@ while True:
                     township['coordinate'] = {'lat': map_coordinate_lat, 'lng': map_coordinate_lng}
 
         session_datetime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        with open(data_directory + 'township/' + township['state'] + '_' + township['area'] + '_' + township['name']
+        with open(data_directory + 'township/' + township['state'] + '_' + township['area'] + '_' + township['township']
                   + '_' + township['category'] + '_' + str(session_datetime) + '.json', 'w') as json_file:
             json.dump(township, json_file)
 
@@ -161,7 +161,7 @@ while True:
 
             transactions.append(transaction)
 
-        with open(data_directory + 'transaction/' + township['state'] + '_' + township['area'] + '_' + township['name']
+        with open(data_directory + 'transaction/' + township['state'] + '_' + township['area'] + '_' + township['township']
                   + '_' + township['category'] + '_' + str(session_datetime) + '.json', 'w') as json_file:
             json.dump(transactions, json_file)
 

@@ -15,7 +15,7 @@ listing_tbl = db.listings
 poi_tbl = db.pois
 
 data_directory = '../data/iproperty_listing/'
-log = open('load_listing.log', 'a+')
+log = open('../data/load_listing.log', 'a+')
 
 program_start_time = datetime.datetime.now()
 print('Program Start:', program_start_time, file=log, flush=True)

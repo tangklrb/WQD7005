@@ -10,7 +10,7 @@ import pandas as pd
 data_directory = '../data/iproperty_listing/new/'
 host = 'https://www.iproperty.com.my/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
-log = open('crawl_iproperty_listing.log', 'a+')
+log = open('../data/crawl_iproperty_listing.log', 'a+')
 max_crawl_retry = 5
 
 
