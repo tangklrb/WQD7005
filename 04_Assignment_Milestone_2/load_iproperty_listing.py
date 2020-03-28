@@ -14,19 +14,19 @@ db = mongo_client.wqd7005_iproperty_listing
 listing_tbl = db.listings
 poi_tbl = db.pois
 
-data_directory = '../data/crawl_listing_search/'
-log = open('load_listing_search.log', 'a+')
+data_directory = '../data/iproperty_listing/'
+log = open('load_listing.log', 'a+')
 
 program_start_time = datetime.datetime.now()
 print('Program Start:', program_start_time, file=log, flush=True)
 
 try:
-    poi_dir = data_directory + 'poi'
-    listing_dir = data_directory + 'listing'
+    poi_dir = data_directory + 'new/poi'
+    listing_dir = data_directory + 'new/listing'
     loaded_poi_dir = data_directory + 'loaded/poi'
     loaded_listing_dir = data_directory + 'loaded/listing'
-    not_loaded_poi_dir = data_directory + 'not_loaded/poi'
-    not_loaded_listing_dir = data_directory + 'not_loaded/listing'
+    error_poi_dir = data_directory + 'error/poi'
+    error_listing_dir = data_directory + 'error/listing'
 
     # read all json files crawled in milestone 1
     for listing_file in os.listdir(listing_dir):
@@ -87,7 +87,7 @@ try:
                                     poi_id = existing_poi.get('_id')
                                 else:
                                     # otherwise, insert as new POI
-                                    # remove distance as it's relative to the listing but not a general information
+                                    # remove distance as it's relevant to the listing but not a general information
                                     del poi['distance']
                                     del poi['distanceFloat']
                                     poi_id = poi_tbl.insert_one(poi).inserted_id
@@ -100,14 +100,14 @@ try:
                                 })
                             listing_poi[category] = listing_poi_list
 
-                            # move the poi json file to success folder
+                            # move the poi json file to loaded folder
                             os.rename(poi_path, os.path.join(loaded_poi_dir, poi_filename))
                         else:
                             print('No Poi found', file=log, flush=True)
                     except:
                         # if error, move the poi json file to error folder
                         if os.path.isfile(poi_path):
-                            os.rename(poi_path, os.path.join(not_loaded_poi_dir, poi_filename))
+                            os.rename(poi_path, os.path.join(error_poi_dir, poi_filename))
                         e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
                         print('Error:', e, file=log, flush=True)
                         print('Error: Unable to insert/update POI details, proceed for next category', file=log, flush=True)
@@ -135,10 +135,10 @@ try:
                 print('Error: Failed to load listing information', file=log, flush=True)
                 traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
                 # move the listings json file to error folder
-                os.rename(os.path.join(listing_dir, listing_file), os.path.join(not_loaded_listing_dir, listing_file))
+                os.rename(os.path.join(listing_dir, listing_file), os.path.join(error_listing_dir, listing_file))
                 continue
 
-        # if successful, move the listings json file to success folder
+        # if successful, move the listings json file to loaded folder
         os.rename(os.path.join(listing_dir, listing_file), os.path.join(loaded_listing_dir, listing_file))
 
 except:
