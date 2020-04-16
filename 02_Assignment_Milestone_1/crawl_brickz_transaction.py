@@ -1,6 +1,9 @@
 import datetime
 import json
 import re
+import sys
+import time
+
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -25,11 +28,15 @@ townships_headers = {
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'en-US,en;q=0.9',
     'cookie': '_ga=GA1.3.906229850.1584801440; PHPSESSID=6bsrikeh7k5v65onjr2kh9m4b3; '
-              'KP_UID=31f38d05-ea3c-84c2-d0e5-75e338958aa5; _gid=GA1.3.1148108848.1585155670; '
-              '__atuvc=7%7C12%2C50%7C13; __atuvs=5e7b8e551ced1a9602a; _gat=1; '
-              'KP_UIDz=svAXqqrMvvz%2F01GtJeZnXQ%3D%3D%3A'
-              '%3AIC3VaoHbalTOWNhkxdVa4cxSBftfKvNa3tS0KKUOVTq6gUqzz5mNAchxMRJTS1BowICEc0427D4XaDI7nKK3nAsmYjgBEnvth5pMKSPZrE585vFyFnYs%2FOsXn3Bg4h3xwoRqUyVDumBE2DDuCKVLQom9Z9eBo3nO7OQUB6iRZ8zdU%2FARaJ3E5lewsSfHbFYHXSLEykMYFuWEi5mSUhW7qy%2FFqxaGIIZRPk9xzUiCXXQN4Dvi3TpOA%2B2sPR5ChUcHYVrMMP4blLeEqIAxwzHBgFwVuzX%2Fy3kdkRU76ff3U2Hj3SvajhUk7gi9jv3uIfNhqoAsg17j9QfBMkuye2WjxfR0weR6v1UdUHVKeoOAvHwicsl%2FagNMvleiPksLIJpaNskvkVeSfNPf44b8xgBPwhiAMd%2BbGB%2Bf2cMV%2FGiWFlkR0y2m9PEWCmzW%2B%2FlwLpWP3sRbRDBYK6wfSvS%2F%2FmRPHVnRIwGAM%2FE%2BhCQ22TPqlqzna7BowDhmKzef7TrJz8YshawAC%2BkcuFoz9f9WKdcf3w%3D%3D',
-    'if-modified-since': 'Fri, 13 Mar 2020 01:04:12 UTC',
+              'KP_UID=b1f158dd-7352-106c-9cef-70c96b5c296e; _gid=GA1.3.1780907631.1585685551; _gat=1; '
+              'KP_UIDz=%2FPyZIkcrGc5kIJ0hTnfB2w%3D%3D%3A%3AVtWI4XjoaD25'
+              '%2BrxTiyDVnNyHkPljUaWcZIwvy8FOaePHiQkIqETm33klNh3NJ1F77xOffb749NslsQI7eyvRGI4XXrNUqWyEQVZchLT5lcVCgZw'
+              '%2BKGcd8y1xhCz9yPXw7T5N%2BPm%2BnW4oAEC6WSHdYAzOk5pGeGCn4bHeo0DbTXS64Yv14w0%2BYCbhvAga'
+              '%2FQtrBRiA0Ue9uu8fc4%2FkebQacrTjAsAB9MUsMGQaoF4VtStQ1tuyTgiZ0OUlzbRRFh1sYyEGbX5iamk9YwoKG3cENpVP'
+              '%2F5XhYcG3N2%2FslwT7aii9Qm5DU8DF7kkfDlN6tQzW8Maokl3iJeBmGDeEbxoQcLEW%2BPMDYUiQBNs%2BqDqbjSXgvSO'
+              '%2BqprM9pBepnulSf6De5qWaC%2FDnmH1OIkq0GdWSj3hUTC7fHbui%2FvjneCwY2WeahKfKTqM2GnMfmUe1NZd'
+              '%2BTzQQMCDsfgphUCvntY%2BCgE4CtEa3gNgEqzNF%2Ff6xf5gWwjoeMbskdZH%2BaLbovx6MV9hpSv5ZPFbM908OjNcCQ%3D%3D; '
+              '__atuvc=7%7C12%2C134%7C13%2C17%7C14; __atuvs=5e865c568a99321e004',
     'referer': 'https://www.brickz.my/transactions/residential/',
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
@@ -43,26 +50,40 @@ transactions_headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,'
               'application/signed-exchange;v=b3;q=0.9',
     'cookie': '_ga=GA1.3.906229850.1584801440; PHPSESSID=6bsrikeh7k5v65onjr2kh9m4b3; '
-              'KP_UID=31f38d05-ea3c-84c2-d0e5-75e338958aa5; _gid=GA1.3.1148108848.1585155670; '
-              '__atuvc=7%7C12%2C50%7C13; __atuvs=5e7b8e551ced1a9602a; _gat=1; '
-              'KP_UIDz=svAXqqrMvvz%2F01GtJeZnXQ%3D%3D%3A'
-              '%3AIC3VaoHbalTOWNhkxdVa4cxSBftfKvNa3tS0KKUOVTq6gUqzz5mNAchxMRJTS1BowICEc0427D4XaDI7nKK3nAsmYjgBEnvth5pMKSPZrE585vFyFnYs%2FOsXn3Bg4h3xwoRqUyVDumBE2DDuCKVLQom9Z9eBo3nO7OQUB6iRZ8zdU%2FARaJ3E5lewsSfHbFYHXSLEykMYFuWEi5mSUhW7qy%2FFqxaGIIZRPk9xzUiCXXQN4Dvi3TpOA%2B2sPR5ChUcHYVrMMP4blLeEqIAxwzHBgFwVuzX%2Fy3kdkRU76ff3U2Hj3SvajhUk7gi9jv3uIfNhqoAsg17j9QfBMkuye2WjxfR0weR6v1UdUHVKeoOAvHwicsl%2FagNMvleiPksLIJpaNskvkVeSfNPf44b8xgBPwhiAMd%2BbGB%2Bf2cMV%2FGiWFlkR0y2m9PEWCmzW%2B%2FlwLpWP3sRbRDBYK6wfSvS%2F%2FmRPHVnRIwGAM%2FE%2BhCQ22TPqlqzna7BowDhmKzef7TrJz8YshawAC%2BkcuFoz9f9WKdcf3w%3D%3D',
+              'KP_UID=b1f158dd-7352-106c-9cef-70c96b5c296e; _gid=GA1.3.1780907631.1585685551; _gat=1; '
+              'KP_UIDz=%2FPyZIkcrGc5kIJ0hTnfB2w%3D%3D%3A%3AVtWI4XjoaD25'
+              '%2BrxTiyDVnNyHkPljUaWcZIwvy8FOaePHiQkIqETm33klNh3NJ1F77xOffb749NslsQI7eyvRGI4XXrNUqWyEQVZchLT5lcVCgZw'
+              '%2BKGcd8y1xhCz9yPXw7T5N%2BPm%2BnW4oAEC6WSHdYAzOk5pGeGCn4bHeo0DbTXS64Yv14w0%2BYCbhvAga'
+              '%2FQtrBRiA0Ue9uu8fc4%2FkebQacrTjAsAB9MUsMGQaoF4VtStQ1tuyTgiZ0OUlzbRRFh1sYyEGbX5iamk9YwoKG3cENpVP'
+              '%2F5XhYcG3N2%2FslwT7aii9Qm5DU8DF7kkfDlN6tQzW8Maokl3iJeBmGDeEbxoQcLEW%2BPMDYUiQBNs%2BqDqbjSXgvSO'
+              '%2BqprM9pBepnulSf6De5qWaC%2FDnmH1OIkq0GdWSj3hUTC7fHbui%2FvjneCwY2WeahKfKTqM2GnMfmUe1NZd'
+              '%2BTzQQMCDsfgphUCvntY%2BCgE4CtEa3gNgEqzNF%2Ff6xf5gWwjoeMbskdZH%2BaLbovx6MV9hpSv5ZPFbM908OjNcCQ%3D%3D; '
+              '__atuvc=7%7C12%2C134%7C13%2C17%7C14; __atuvs=5e865c568a99321e004',
     'Sec-Fetch-Dest': 'document',
     'Upgrade-Insecure-Requests': '1',
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 '
                   'Safari/537.36 '
 }
 
-page = 1
-townships_url = 'https://www.brickz.my/transactions/residential/page/{}/?range=1992+JAN-'
-townships_url = townships_url.format(str(page))
+page = 1 if sys.argv[1] is None else sys.argv[1]
+
+townships_url_template = 'https://www.brickz.my/transactions/residential/page/{}/?range=1992+JAN-'
+
+townships_url = townships_url_template.format(str(page))
 
 while True:
-    request = requests.get(townships_url, headers=townships_headers)
-    response = request.text
 
-    uri = townships_url.strip().replace('https://www.brickz.my/transactions/residential/', '').split('/')
-    print('-- Page', uri[1], ':', townships_url, '--')
+    print('-- Page', page, ':', townships_url, '--')
+
+    try:
+        request = requests.get(townships_url, headers=townships_headers, timeout=60)
+    except:
+        print('  Error Requesting Page:', townships_url)
+        print('  Sleep for 10 seconds and retry')
+        time.sleep(10)
+        continue
+
+    response = request.text
 
     town_page_html = BeautifulSoup(response, 'html.parser')
     township_rows = town_page_html.find_all('tr', attrs={'itemtype': 'https://schema.org/AdministrativeArea'})
@@ -90,29 +111,34 @@ while True:
             township[format_key(price_quartile_key.strip())] = price_quartile_value.strip()
         township['median_price'] = columns[3].text
 
-        print('  Township:', township['name'])
+        print('  -- Township:', township['name'])
 
         url = township['url'].replace('?range=', 'view/map/?range=')
         browser = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
         browser.get(url)
         browser.add_cookie({'name': '_ga', 'value': 'GA1.3.906229850.1584801440'})
         browser.add_cookie({'name': 'PHPSESSID', 'value': '6bsrikeh7k5v65onjr2kh9m4b3'})
-        browser.add_cookie({'name': '__atuvc', 'value': '7%7C12%2C50%7C13'})
-        browser.add_cookie({'name': '__atuvs', 'value': '5e7b8e551ced1a9602a'})
+        browser.add_cookie({'name': '__atuvc', 'value': '7%7C12%2C134%7C13%2C9%7C14'})
+        browser.add_cookie({'name': '__atuvs', 'value': '5e849ae5361ea20c000'})
         browser.add_cookie({'name': '_gat', 'value': '1'})
-        browser.add_cookie({'name': 'KP_UIDz', 'value': 'svAXqqrMvvz%2F01GtJeZnXQ%3D%3D%3A%3AIC3VaoHbalTOWNhkxdVa4cxSBftfKvNa3tS0KKUOVTq6gUqzz5mNAchxMRJTS1BowICEc0427D4XaDI7nKK3nAsmYjgBEnvth5pMKSPZrE585vFyFnYs%2FOsXn3Bg4h3xwoRqUyVDumBE2DDuCKVLQom9Z9eBo3nO7OQUB6iRZ8zdU%2FARaJ3E5lewsSfHbFYHXSLEykMYFuWEi5mSUhW7qy%2FFqxaGIIZRPk9xzUiCXXQN4Dvi3TpOA%2B2sPR5ChUcHYVrMMP4blLeEqIAxwzHBgFwVuzX%2Fy3kdkRU76ff3U2Hj3SvajhUk7gi9jv3uIfNhqoAsg17j9QfBMkuye2WjxfR0weR6v1UdUHVKeoOAvHwicsl%2FagNMvleiPksLIJpaNskvkVeSfNPf44b8xgBPwhiAMd%2BbGB%2Bf2cMV%2FGiWFlkR0y2m9PEWCmzW%2B%2FlwLpWP3sRbRDBYK6wfSvS%2F%2FmRPHVnRIwGAM%2FE%2BhCQ22TPqlqzna7BowDhmKzef7TrJz8YshawAC%2BkcuFoz9f9WKdcf3w%3D%3D'})
-        browser.add_cookie({'name': 'KP_UID', 'value': '31f38d05-ea3c-84c2-d0e5-75e338958aa5'})
-        browser.add_cookie({'name': '_gid', 'value': 'A1.3.1148108848.1585155670'})
-        browser.refresh()
+        browser.add_cookie({'name': 'KP_UIDz',
+                            'value': 'fCV5zEoTsU5ZlSkVfr%2FJug%3D%3D%3A%3AQPXBC9gIkLH4N0Hb9K4%2FUQB2pmolDQ81fHZO%2FbGrgyBWURNFjh4pRsUEa74f20JNe4fUUqHZ8rcL7d3SNRoHwU6i%2FFn3oOj%2B2iig88MEmbrkcI5bPJsDrn%2BQf8mYEag0NpQhK3hruHSpc6vTiBzAllr%2F777Haon5rbMz5GL27ZM%2F00ifZTMBpqeHAW6Np%2FQYnM4FpQYIbnMWaSeb%2FU9faZdsxokokzL9yZe5UHiDmabPTxRF%2F8pXDUKaIRgfHR9HiD6C3XeJkKfdLEuGr0Z%2BemQjHHxZlFe94GROXh1KZ3o66yxEmeGSXQGyXVnHRO0xzr665tLfYOiS8SQPhwbVvw3bW%2FeJGbOghKTQ5vxUzfy%2Fg2GZxLV6Zxco%2BMIHeHxNhq%2FNeotLOVmVECvB0AIlNBR7rDjZa4G88Qm%2BTjEZZOsLt1RAQD0ZqXCGX4DrhlnWBB9Ldnz3XF%2BBO5xUIKmWBFJqFDLR8aBUxRw5hvIJg3XlF6zXRtbrB%2B%2BUJ5wtGr27'})
+        browser.add_cookie({'name': 'KP_UID', 'value': 'b1f158dd-7352-106c-9cef-70c96b5c296e'})
+        browser.add_cookie({'name': '_gid', 'value': 'GA1.3.1780907631.1585685551'})
 
-        delay = 30
-        try:
-            myElem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'gmnoscreen')))
-        except TimeoutException:
-            print("  -- Loading timed-out!")
-
-        google_map = browser.find_element_by_xpath('//a[@title="Open this area in Google Maps (opens a new window)"]')
-        township['map_url'] = google_map.get_attribute('href')
+        delay = 120
+        while True:
+            try:
+                browser.refresh()
+                myElem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'gmnoscreen')))
+                google_map = browser.find_element_by_xpath('//a[@title="Open this area in Google Maps (opens a new window)"]')
+            except TimeoutException:
+                print('    - Error Requesting Page:', url)
+                print('    - Sleep for 10 seconds and retry')
+                time.sleep(10)
+            else:
+                township['map_url'] = google_map.get_attribute('href')
+                break
 
         if township['map_url']:
             map_host, map_uri = township['map_url'].split('?')
@@ -163,13 +189,15 @@ while True:
 
             transactions.append(transaction)
 
-        with open(data_directory + 'transaction/' + township['state'] + '_' + township['area'] + '_' + township['township']
+        with open(data_directory + 'transaction/' + township['state'] + '_' + township['area'] + '_' + township[
+            'township']
                   + '_' + township['category'] + '_' + str(session_datetime) + '.json', 'w') as json_file:
             json.dump(transactions, json_file)
 
-    next_page = town_page_html.find('a', attrs={'class': 'next'})
-    if next_page:
-        townships_url = next_page.get('href')
-    else:
-        break
-
+    page = int(page) + 1
+    townships_url = townships_url_template.format(str(page))
+    # next_page = town_page_html.find('a', attrs={'class': 'next'})
+    # if next_page:
+    #     townships_url = next_page.get('href')
+    # else:
+    #     break
