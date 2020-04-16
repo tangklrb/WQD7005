@@ -5,9 +5,9 @@ import traceback
 import requests
 import datetime
 
-data_directory = '../data/crawl_listing_search/'
+data_directory = '../data/iproperty_listing/'
 reaasia_graphql_api = 'https://raptor.rea-asia.com/v1/graphql'
-log = open('crawl_listing_search.log', 'a+')
+log = open('../data/crawl_iproperty_listing.log', 'a+')
 max_crawl_retry = 5
 sub_dir = sys.argv[1]
 

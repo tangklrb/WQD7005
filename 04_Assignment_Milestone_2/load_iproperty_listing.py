@@ -7,35 +7,37 @@ import traceback
 
 mongo_host = "mongodb://localhost:27017/"
 mongo_client = pymongo.MongoClient(mongo_host)
-db_name = 'wqd7005_iproperty_listing'
-listing_tbl_name = 'listings'
-poi_tbl_name = 'pois'
-db = mongo_client.wqd7005_iproperty_listing
+db = mongo_client.WQD7005_Assignment
 listing_tbl = db.listings
 poi_tbl = db.pois
 
-data_directory = '../data/crawl_listing_search/'
-log = open('load_listing_search.log', 'a+')
+data_directory = '../data/iproperty_listing/'
+log = open('../data/load_iproperty_listing.log', 'a+')
 
 program_start_time = datetime.datetime.now()
 print('Program Start:', program_start_time, file=log, flush=True)
 
 try:
-    poi_dir = data_directory + 'poi'
-    listing_dir = data_directory + 'listing'
+    poi_dir = data_directory + 'new/poi'
+    listing_dir = data_directory + 'new/listing'
     loaded_poi_dir = data_directory + 'loaded/poi'
     loaded_listing_dir = data_directory + 'loaded/listing'
-    not_loaded_poi_dir = data_directory + 'not_loaded/poi'
-    not_loaded_listing_dir = data_directory + 'not_loaded/listing'
+    error_poi_dir = data_directory + 'error/poi'
+    error_listing_dir = data_directory + 'error/listing'
 
     # read all json files crawled in milestone 1
-    for listing_file in os.listdir(listing_dir):
+    for listing_file in sorted(os.listdir(listing_dir)):
         if listing_file == 'readme.txt':
             continue
 
-        with open(os.path.join(listing_dir, listing_file)) as json_file:
+        listing_path = os.path.join(listing_dir, listing_file)
+        listing_loaded_path = os.path.join(loaded_listing_dir, listing_file)
+        listing_error_path = os.path.join(error_listing_dir, listing_file)
+
+        with open(listing_path) as json_file:
             current_listing = json.load(json_file)
 
+        # print('Listing File:', listing_file, flush=True)
         print('Preparing to load Listings into Data Lake', listing_file, file=log, flush=True)
         filename = listing_file.replace('.json', '').split('_')
         session_postfix = filename[2]
@@ -44,6 +46,7 @@ try:
         for listing in current_listing:
             try:
                 listing_id = listing['id']
+                # print('Listing:', listing_id, flush=True)
                 print('Loading Listing:', listing_id, file=log, flush=True)
 
                 # include poi summary into listing
@@ -55,7 +58,11 @@ try:
                     try:
                         listing_poi_list = list()
                         poi_filename = listing_id + '_' + category + '_' + str(session_postfix) + '.json'
+
+                        # print(category.capitalize(), 'POI File:', poi_filename, flush=True)
                         poi_path = os.path.join(poi_dir, poi_filename)
+                        poi_loaded_path = os.path.join(loaded_poi_dir, poi_filename)
+                        poi_error_path = os.path.join(error_poi_dir, poi_filename)
                         if os.path.isfile(poi_path):
                             with open(poi_path) as json_file:
                                 pois = json.load(json_file)
@@ -85,12 +92,14 @@ try:
                                 if existing_poi:
                                     # if exist, get the existing object ID
                                     poi_id = existing_poi.get('_id')
+                                    # print('.', end='', flush=True)
                                 else:
                                     # otherwise, insert as new POI
-                                    # remove distance as it's relative to the listing but not a general information
+                                    # remove distance as it's relevant to the listing but not a general information
                                     del poi['distance']
                                     del poi['distanceFloat']
                                     poi_id = poi_tbl.insert_one(poi).inserted_id
+                                    # print('.', end='', flush=True)
 
                                 # add attributes in listing to store poi information and the distance to the poi
                                 listing_poi_list.append({
@@ -100,15 +109,17 @@ try:
                                 })
                             listing_poi[category] = listing_poi_list
 
-                            # move the poi json file to success folder
-                            os.rename(poi_path, os.path.join(loaded_poi_dir, poi_filename))
+                            # move the poi json file to loaded folder
+                            os.rename(poi_path, poi_loaded_path)
                         else:
+                            # print('No Poi found', flush=True)
                             print('No Poi found', file=log, flush=True)
                     except:
                         # if error, move the poi json file to error folder
                         if os.path.isfile(poi_path):
-                            os.rename(poi_path, os.path.join(not_loaded_poi_dir, poi_filename))
+                            os.rename(poi_path, poi_error_path)
                         e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
+                        # print('--- ERROR (POI)', flush=True)
                         print('Error:', e, file=log, flush=True)
                         print('Error: Unable to insert/update POI details, proceed for next category', file=log, flush=True)
                         continue
@@ -118,28 +129,33 @@ try:
                 # insert or update the listing into mongodb
                 listing_inserted_id = listing_tbl.replace_one({'id': listing_id}, listing, upsert=True).upserted_id
                 if listing_inserted_id is not None:
+                    # print('Inserted, Object ID', listing_inserted_id, flush=True)
                     print('Inserted, Object ID', listing_inserted_id, file=log, flush=True)
                 else:
                     existing_listing = listing_tbl.find_one({'id': listing_id})
                     listing_updated_id = existing_listing.get('_id')
+                    # print('Updated, Object ID', listing_updated_id, flush=True)
                     print('Updated, Object ID', listing_updated_id, file=log, flush=True)
 
             except KeyboardInterrupt:
+                # print('--- INTERUPTED', flush=True)
                 print('Interrupted by user.', file=log, flush=True)
                 exit(0)
 
             except:
                 e = str(sys.exc_info()[0]) + str(sys.exc_info()[1]) + str(sys.exc_info()[2])
                 exc_type, exc_value, exc_traceback = sys.exc_info()
+                # print('--- ERROR (Listing)', flush=True)
                 print('Error:', e, file=log, flush=True)
                 print('Error: Failed to load listing information', file=log, flush=True)
                 traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
                 # move the listings json file to error folder
-                os.rename(os.path.join(listing_dir, listing_file), os.path.join(not_loaded_listing_dir, listing_file))
+                os.rename(listing_path, listing_error_path)
                 continue
 
-        # if successful, move the listings json file to success folder
-        os.rename(os.path.join(listing_dir, listing_file), os.path.join(loaded_listing_dir, listing_file))
+        # if successful, move the listings json file to loaded folder
+        # print('--- SUCCESS', flush=True)
+        os.rename(listing_path, listing_loaded_path)
 
 except:
     print('Terminated.', file=log, flush=True)
