@@ -1,0 +1,136 @@
+In lab 1, you installed Anaconda, learned how to import and view basic information about the lab 1 dataset 
+(e.g., data dimensionality) using the iPython interpreter. This practical note introduces you to more data insights functions to
+perform data preparation using Python libraries we installed earlier.
+
+Data preparation is the most important step in any data mining project. It determines the "make or break" of a data mining project and, 
+it is estimated about 60% of your time will be spent on this stage. There are many processes that can be performed in data preparation, 
+depending on the data type and algorithm of choice for modelling. In this practical, we will focus on the following steps:
+
+i) Understanding data: exploring and visualising data to gain initial insights and understanding.
+ii) Dealing with missing values: missing values are detrimental to performance of data mining models.
+iii) Noise and errorneous data cleaning: similar to missing values, they can also negatively impact data mining models and analysis.
+iv) Data formatting: formatting data into a format suitable for the underlying algorithm and framework to be used. 
+This includes setting correct roles and data types for variables based on their analytics purpose.
+
+
+You will be learned about how to load the lab1 dataset and review overall information about fields in the dataset.
+
+In predictive data mining process, there must be a target variable whose value is to be predicted. 
+In this dataset, we aim to classify whether a person is a lapsing donor or not, corresponding to TargetB. 
+We are focusing on "classification" prediction mining. We are not interested in knowing the exact amount of donation that 
+a person will make. In other words, we will not treat this problem as “regression“ prediction problem. 
+Therefore, we will not need TargetD and it will be dropped from the dataset.
+
+2. Exploring data
+Exploring and validating content of your data is a vital part of the data preparation process. By assaying the prepared data,
+you substantially reduce the chances of errorneous results in your analysis and gain visual insights into associations between variables. This section will guide you to find these vital insights.
+
+Firstly, let's take a closer look on the dataset. The dataframe .info() output revealed a number of important information from the dataset:
+
+Number of rows (or entries): ???
+Number of fields (or columns): ???
+Number of entries and data type for each column: e.g. ??? entries and integer number for Target B; 
+??? entries and floating point for GiftAvgCard36.
+From point three, we learned there are irregularities in some columns. 
+For example, with ??? rows in the whole dataset, there are only ??? data points in GiftAvgCard36. 
+This requires a deeper investigation of each column.
+
+2.1. Explore column data
+Assume we would like to investigate the DemAge column of this dataset in depth. Recall, a column in Pandas is called a Series, 
+and there are many functions providing insights on the characteristic and distribution of the data.
+
+Essential functions for data exploration in Pandas
+Function pandas.Series.describe() prints key statistics of a series, including count (number of non-missing values), 
+mean (average), std (standard deviation), min, max, and quantiles (typically at 25%, 50%, 75%. 50% quantile is also called as median).
+
+Function pandas.Series.unique() prints unique values in a Series. Typically used for categorical variables.
+
+Function pandas.Series.value_counts() prints unique values and corresponding count in a Series. Also commonly used for 
+categorical variables.
+
+Let's start with .describe(). Run the following command into your iPython console.
+
+
+To check the unique values and how many records for each value, we could use .unique() and .value_counts() functions.
+
+When dealing with interval variables, typically binning (categorising values into certain ranges) is very common to allow 
+easier interpretation. In pandas, we can do this by supplying bins parameter into the .value_counts() function.
+
+
+The output of these functions revealed a number of data problems with "DemAge" column.
+
+There are only ??? records in "DemAge" column (from .describe()'s count output), while the total number of records in this data set 
+is ???. This indicates missing values in "DemAge". This observation is also visible through the NaN printed by .unique() method.
+One record in "DemAge" has 0 as value (from the .value_counts() output). Logically, someone should not have age of 0. 
+It indicates an errorneous data that needs to be removed from this column.
+These problems need to be rectified before building data mining models. We will learn the techniques to fix data issues later in section 3.
+
+Could you spot data problems in other columns using .describe(), .unique() and .value_counts()?
+
+
+2.2. Grouping and plotting distributions of columns
+From the previous section, you have revealed some issues with each column in this dataset. This is not enough, however, 
+as we also need to look into interaction between two or more variables. In addition, plotting distribution of data column(s) 
+might produce more insights on the problems in this data.
+
+Grouping is commonly used to see whether there is a trend between two or more different fields. For example, we would like to 
+know specific correlations between tendency to be a lapsing donor (TargetB) and age (DemAge), gender (DemGender) or 
+median home value (DemMedHomeValue). In pandas, grouping can be performed using the .groupby() method. .groupby() will
+return a grouped Series, which we can run value_counts(), mean(), .median() and many other Series functions on.
+
+Let's start with age (DemAge). Run the following command to get the average age of lapsing donors vs non-lapsing donors.
+
+Other than .mean(), we could also perform grouping with other method such as .value_counts() or .median(). Use value_counts() to 
+get gender of lapsing and non-lapsing donors.
+
+get the value count of each gender.
+
+add normalisation to get the relative frequency
+
+
+It seems there is an equal proportion of female/male/unknown gender donors in both lapsing and non-lapsing donors.
+
+While all of the methods we have used so far are very useful in providing information about the data, data mining professionals 
+commonly visualise these information in plots for easier presentation. In Python, there are many libraries to draw great data plots, 
+such as matplotlib, seaborn, ggplot, plotly and bokeh. In this unit, we will use seaborn and matplotlib,
+two of the most popular visualisation libraries. Import both of them with the following command.
+
+Plotting the distribution values in a field/column is a common visualization task. A number options exist in seaborn/matplotlib. 
+For interval/numerical variables, distplot can be used. Let's try that for "DemAge". distplot is sensitive towards missing values 
+(which are present in "DemAge"), thus we have to drop them using dropna() method.
+
+
+From the plot above, we can see most donors are between 40-80 years old, with the data distribution skewed to right.
+
+Distribution plots are typically use only for interval/numerical variables. For nominal/categorical variables, 
+such as DemGender, countplot is used to build a bar chart to show distribution of each values.
+
+Lastly, we can explore the distribution of a variable using boxplot. Assume we would like to see the difference of home values of 
+the donors vs non-donors. We can build a boxplot with TargetB as X and DemMedHomeValue as y.
+
+
+The boxplot shows a slight difference of home values of lapsing and non-lapsing donors. Lapsing donors have slightly higher average and maximum home value, sign of affluence and wealth.
+
+Could you visualize other columns using distplot, countplot and boxplot?
+
+With practice, you should be able to master exploration and visualisation skill, to use specific functions suited best for a 
+particular field.
+
+
+3. Modifying and Correcting Data
+Data exploration, grouping and plotting that we performed in the previous section reveal the following problems in the dataset:
+
+a) Incorrect type used for DemCluster and DemHomeOwner. DemCluster should be an categorical/nominal variable
+    and DemHomeOwner should be a binary variable.
+b) Errorneous/invalid values (0) in DemMedIncome and DemAge.
+c) Missing values in DemAge, DemMedIncome, GiftAvgCard36.
+d) Redundant variables in ID and TargetD.
+We will now rectify these problems.
+
+3.1. Setting correct type to variables
+3.2. Correcting invalid values
+3.3. Imputing Missing Values
+3.4. Dropping Unnecessary Variables
+3.5. Formatting Categorical Variable
+3.6. Wrapping up
+
