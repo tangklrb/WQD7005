@@ -1,0 +1,150 @@
+,property_type,area_sqft,non_landed,bedrooms,price,state,area,median_psf,median_price,nearby_poi_education,nearby_poi_transportation,nearby_poi_healthcare
+0,Terrace House,1970,0,3.0,610000,Kuala Lumpur,Kepong,388,775000,37,10,3
+1,Terrace House,1539,0,3.0,720000,Kuala Lumpur,Kepong,388,775000,37,10,3
+2,Terrace House,1539,0,3.0,670000,Kuala Lumpur,Kepong,388,775000,37,10,3
+3,Terrace House,3272,0,3.0,1100000,Kuala Lumpur,Kepong,388,775000,37,10,3
+4,Cluster House,990,0,2.0,280000,Kuala Lumpur,Bandar Tun Razak,294,396667,42,11,5
+5,Cluster House,1346,0,3.0,410000,Kuala Lumpur,Bandar Tun Razak,294,396667,42,11,5
+6,Cluster House,1701,0,2.0,500000,Kuala Lumpur,Bandar Tun Razak,294,396667,42,11,5
+7,Condominium/Apartment,1098,1,3.0,450000,Kuala Lumpur,Dutamas,394,432667,58,16,10
+8,Condominium/Apartment,1098,1,3.0,438000,Kuala Lumpur,Dutamas,394,432667,58,16,10
+9,Condominium/Apartment,1098,1,3.0,410000,Kuala Lumpur,Dutamas,394,432667,58,16,10
+10,Terrace House,1873,0,4.0,1390000,Kuala Lumpur,Taman Tun Dr Ismail,814,1541667,35,7,3
+11,Terrace House,1905,0,4.0,1635000,Kuala Lumpur,Taman Tun Dr Ismail,814,1541667,35,7,3
+12,Terrace House,1905,0,4.0,1600000,Kuala Lumpur,Taman Tun Dr Ismail,814,1541667,35,7,3
+13,Terrace House,1647,0,3.0,790000,Kuala Lumpur,Bandar Menjalara,512,635000,35,9,3
+14,Terrace House,883,0,3.0,480000,Kuala Lumpur,Bandar Menjalara,512,635000,35,9,3
+15,Condominium/Apartment,1076,1,3.0,375000,Kuala Lumpur,Cheras,375,412500,68,16,8
+16,Condominium/Apartment,1119,1,3.0,450000,Kuala Lumpur,Cheras,375,412500,68,16,8
+17,Condominium/Apartment,1432,1,3.0,600000,Kuala Lumpur,Mont Kiara,402,575000,35,4,3
+18,Condominium/Apartment,1432,1,3.0,550000,Kuala Lumpur,Mont Kiara,402,575000,35,4,3
+19,Condominium/Apartment,1948,1,2.0,1960000,Kuala Lumpur,Bangsar,1029,1517500,38,11,3
+20,Condominium/Apartment,1023,1,3.0,1075000,Kuala Lumpur,Bangsar,1029,1517500,38,11,3
+21,Terrace House,1765,0,3.0,770000,Kuala Lumpur,Kepong,432,785000,36,9,2
+22,Terrace House,1873,0,3.0,800000,Kuala Lumpur,Kepong,432,785000,36,9,2
+23,Terrace House,1604,0,4.0,743000,Kuala Lumpur,Taman OUG,531,864000,33,9,2
+24,Terrace House,1647,0,3.0,985000,Kuala Lumpur,Taman OUG,531,864000,33,9,2
+25,Condominium/Apartment,1346,1,2.0,660000,Kuala Lumpur,Sentul,472,635000,70,22,15
+26,Condominium/Apartment,1346,1,4.0,610000,Kuala Lumpur,Sentul,472,635000,70,22,15
+27,Condominium/Apartment,861,1,2.0,100000,Kuala Lumpur,Brickfields,116,100000,58,24,5
+28,Terrace House,2347,0,3.0,1100000,Kuala Lumpur,Bandar Baru Sri Petaling,469,1100000,32,8,1
+29,Condominium/Apartment,1572,1,2.0,900000,Kuala Lumpur,Bangsar,573,900000,42,13,4
+30,Condominium/Apartment,1119,1,3.0,300000,Kuala Lumpur,Pudu,268,300000,104,40,9
+31,Hotel/Service Apartment,861,1,1.0,234225,Kuala Lumpur,Bangsar South,272,234225,48,12,6
+32,Hotel/Service Apartment,409,1,2.0,300000,Kuala Lumpur,Pudu,733,300000,101,42,6
+33,Terrace House,2314,0,4.0,1650000,Kuala Lumpur,Damansara,713,1650000,30,2,2
+34,Flat,700,1,3.0,199000,Kuala Lumpur,Setapak,284,199000,56,3,4
+35,Terrace House,3466,0,4.0,1910000,Kuala Lumpur,Taman Melawati,551,1910000,39,4,2
+36,Terrace House,1873,0,3.0,3150000,Kuala Lumpur,Desa Parkcity,1682,3150000,35,6,2
+37,Semi-Detached House,6351,0,7.0,4500000,Kuala Lumpur,Desa Parkcity,709,4500000,27,5,1
+38,Condominium/Apartment,1238,1,3.0,600000,Kuala Lumpur,Taman Desa,485,600000,32,15,4
+39,Hotel/Service Apartment,1227,1,3.0,680000,Kuala Lumpur,Jalan Ipoh,554,680000,37,9,3
+40,Hotel/Service Apartment,1292,1,3.0,590000,Kuala Lumpur,Kepong,457,590000,36,7,4
+41,Terrace House,1539,0,3.0,802000,Kuala Lumpur,Kuchai Lama,521,802000,30,9,2
+42,Condominium/Apartment,1830,1,3.0,830000,Kuala Lumpur,Dutamas,454,830000,40,5,2
+43,Hotel/Service Apartment,764,1,0.0,560000,Kuala Lumpur,Cheras,733,560000,50,10,7
+44,Condominium/Apartment,926,1,3.0,350000,Kuala Lumpur,Bukit Jalil,378,350000,32,6,1
+45,Condominium/Apartment,861,1,3.0,355000,Kuala Lumpur,Pudu,412,355000,91,39,7
+46,Hotel/Service Apartment,1432,1,3.0,820000,Kuala Lumpur,Mont Kiara,573,820000,33,3,3
+47,Semi-Detached House,5985,0,5.0,3700000,Kuala Lumpur,Kampung Sungai Penchala,618,3700000,33,2,3
+48,Condominium/Apartment,797,1,3.0,430000,Kuala Lumpur,Cheras,540,430000,46,11,7
+49,Condominium/Apartment,1055,1,3.0,120000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road),114,120000,35,8,2
+50,Condominium/Apartment,1335,1,4.0,410000,Kuala Lumpur,Setapak,307,410000,48,4,3
+51,Condominium/Apartment,915,1,3.0,335000,Kuala Lumpur,Wangsa Maju,366,335000,58,4,5
+52,Condominium/Apartment,1292,1,5.0,535000,Kuala Lumpur,Bandar Menjalara,414,535000,36,8,2
+53,Condominium/Apartment,1044,1,3.0,184803,Kuala Lumpur,Salak Selatan,177,184803,35,9,3
+54,Condominium/Apartment,2648,1,4.0,1500000,Kuala Lumpur,Mont Kiara,567,1500000,37,3,3
+55,Condominium/Apartment,1055,1,2.0,570000,Kuala Lumpur,Mont Kiara,540,570000,37,3,3
+56,Flat,560,1,2.0,185000,Kuala Lumpur,Setapak,331,185000,47,3,4
+57,Condominium/Apartment,732,1,3.0,450000,Kuala Lumpur,Pantai Dalam/Kerinchi,615,450000,43,13,7
+58,Condominium/Apartment,1173,1,3.0,360000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road),307,360000,34,8,2
+59,Condominium/Apartment,549,1,2.0,200000,Kuala Lumpur,Taman Setiawangsa,364,200000,34,3,6
+60,Condominium/Apartment,818,1,3.0,288000,Kuala Lumpur,Cheras,352,288000,43,11,7
+61,Condominium/Apartment,1023,1,3.0,485000,Kuala Lumpur,Bandar Tun Razak,474,485000,44,9,4
+62,Semi-Detached House,3283,0,5.0,2670000,Kuala Lumpur,Sri Hartamas,813,2670000,34,1,3
+63,Hotel/Service Apartment,2379,1,4.0,1840000,Kuala Lumpur,Taman Tun Dr Ismail,774,1840000,38,7,4
+64,Flat,1141,1,3.0,210000,Kuala Lumpur,Kuchai Lama,184,210000,31,10,2
+65,Terrace House,1496,0,4.0,700000,Kuala Lumpur,Cheras,468,700000,27,4,0
+66,Terrace House,3003,0,4.0,2050000,Kuala Lumpur,Kepong,683,2050000,26,6,1
+67,Terrace House,1432,0,3.0,700000,Kuala Lumpur,Cheras,489,700000,44,8,8
+68,Terrace House,1690,0,3.0,680000,Kuala Lumpur,Kuchai Lama,402,680000,29,8,2
+69,Terrace House,2669,0,3.0,1420000,Kuala Lumpur,Taman Desa,532,1420000,34,13,4
+70,Semi-Detached House,2303,0,3.0,750000,Kuala Lumpur,Kuchai Lama,326,750000,30,11,4
+71,Terrace House,1647,0,4.0,580000,Kuala Lumpur,Cheras,352,580000,78,28,10
+72,Terrace House,1399,0,3.0,915000,Kuala Lumpur,Kepong,654,915000,48,11,5
+73,Terrace House,1604,0,3.0,425000,Kuala Lumpur,Gombak,265,425000,33,2,0
+74,Terrace House,1539,0,4.0,600000,Kuala Lumpur,Salak Selatan,390,600000,31,10,2
+75,Terrace House,2400,0,3.0,1300000,Kuala Lumpur,Seputeh,542,1300000,47,20,5
+76,Terrace House,883,0,3.0,470000,Kuala Lumpur,Setapak,533,470000,64,4,5
+77,Terrace House,603,0,3.0,388000,Kuala Lumpur,Segambut,644,388000,43,6,3
+78,Semi-Detached House,2723,0,7.0,988000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road),363,988000,34,6,1
+79,Terrace House,1647,0,3.0,580000,Kuala Lumpur,Cheras,352,580000,30,4,4
+80,Condominium/Apartment,657,1,2.0,240000,Kuala Lumpur,Setapak,365,240000,64,4,5
+81,Terrace House,1647,0,3.0,700000,Kuala Lumpur,Kepong,425,700000,39,11,3
+82,Semi-Detached House,5188,0,5.0,2600000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road),501,2600000,30,8,1
+83,Hotel/Service Apartment,1001,1,3.0,450000,Kuala Lumpur,Ampang,450,450000,41,8,5
+84,Condominium/Apartment,2239,1,4.0,1360000,Kuala Lumpur,Mont Kiara,607,1360000,38,3,3
+85,Condominium/Apartment,2411,1,3.0,1497000,Kuala Lumpur,Bangsar,621,1497000,35,12,4
+86,Condominium/Apartment,2906,1,5.0,1600000,Kuala Lumpur,Ampang Hilir,551,1600000,58,15,6
+87,Condominium/Apartment,1873,1,4.0,1300000,Kuala Lumpur,Salak Selatan,694,1300000,36,10,3
+88,Detached House,5231,0,7.0,7200000,Kuala Lumpur,Mont Kiara,1376,7200000,37,3,3
+89,Terrace House,883,0,2.0,450000,Kuala Lumpur,Wangsa Maju,510,450000,46,2,3
+90,Hotel/Service Apartment,926,1,3.0,350000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road),378,350000,39,7,3
+91,Terrace House,1302,0,4.0,470000,Selangor,Semenyih,306,1029334,6,0,1
+92,Semi-Detached House,4715,0,4.0,1280000,Selangor,Semenyih,306,1029334,6,0,1
+93,Semi-Detached House,4715,0,4.0,1338000,Selangor,Semenyih,306,1029334,6,0,1
+94,Semi-Detached House,3595,0,6.0,1560000,Selangor,Telok Panglima Garang,424,1581667,5,0,3
+95,Semi-Detached House,3595,0,6.0,1560000,Selangor,Telok Panglima Garang,424,1581667,5,0,3
+96,Semi-Detached House,4047,0,6.0,1625000,Selangor,Telok Panglima Garang,424,1581667,5,0,3
+97,Terrace House,1281,0,4.0,550000,Selangor,Dengkil,429,550000,4,0,1
+98,Terrace House,1281,0,4.0,550000,Selangor,Dengkil,429,550000,4,0,1
+99,Terrace House,1432,0,3.0,380000,Selangor,Kajang,303,442500,10,0,1
+100,Terrace House,1485,0,4.0,505000,Selangor,Kajang,303,442500,10,0,1
+101,Detached House,8084,0,5.0,3000000,Selangor,Subang Jaya,456,1695000,35,12,2
+102,Terrace House,721,0,3.0,390000,Selangor,Subang Jaya,456,1695000,35,12,2
+103,Hotel/Service Apartment,786,1,2.0,485000,Selangor,Kota Damansara,670,767500,36,5,2
+104,Hotel/Service Apartment,1453,1,3.0,1050000,Selangor,Kota Damansara,670,767500,36,5,2
+105,Semi-Detached House,3197,0,4.0,468060,Selangor,Sepang,146,468060,2,1,0
+106,Semi-Detached House,3197,0,3.0,468060,Selangor,Sepang,146,468060,2,1,0
+107,Terrace House,1507,0,4.0,665000,Selangor,Bandar Bukit Raja,441,665000,8,1,1
+108,Terrace House,1647,0,4.0,335000,Selangor,Banting,203,335000,2,0,1
+109,Terrace House,1302,0,4.0,490000,Selangor,Bangi,376,490000,9,1,2
+110,Terrace House,1539,0,4.0,693000,Selangor,Cheras South,450,693000,14,2,0
+111,Condominium/Apartment,915,1,3.0,322896,Selangor,Cyberjaya,353,322896,10,0,0
+112,Terrace House,1098,0,3.0,230000,Selangor,Denai Alam,209,230000,9,0,2
+113,Condominium/Apartment,1044,1,3.0,320000,Selangor,Puchong,306,320000,14,4,2
+114,Terrace House,1399,0,4.0,690000,Selangor,Shah Alam,493,690000,4,0,0
+115,Terrace House,1765,0,4.0,499000,Selangor,Ampang,283,499000,26,3,3
+116,Flat,646,1,3.0,60000,Selangor,Damansara Damai,93,60000,25,6,2
+117,Condominium/Apartment,786,1,3.0,225000,Selangor,Taman TTDI Jaya,286,225000,13,3,2
+118,Hotel/Service Apartment,1270,1,3.0,500000,Selangor,USJ,394,500000,44,13,3
+119,Condominium/Apartment,1152,1,3.0,458000,Selangor,Kelana Jaya,398,458000,23,10,1
+120,Condominium/Apartment,990,1,3.0,380000,Selangor,Bandar Puteri Puchong,384,380000,18,5,4
+121,Condominium/Apartment,1012,1,3.0,912800,Selangor,Cyberjaya,902,912800,11,2,1
+122,Condominium/Apartment,1744,1,3.0,800000,Selangor,Bandar Sunway,459,800000,42,13,2
+123,Hotel/Service Apartment,1023,1,3.0,400000,Selangor,Seri Kembangan,391,400000,15,4,0
+124,Flat,721,1,3.0,80000,Selangor,Kajang,111,80000,21,3,1
+125,Terrace House,990,0,3.0,450000,Selangor,Kajang,454,450000,22,3,4
+126,Terrace House,1615,0,3.0,550000,Selangor,Petaling Jaya,341,550000,48,11,7
+127,Terrace House,1184,0,3.0,385000,Selangor,Shah Alam,325,385000,6,0,3
+128,Town House,1862,0,3.0,529900,Selangor,Puchong South,285,529900,11,4,0
+129,Terrace House,1647,0,4.0,1000000,Selangor,Damansara Utama,607,1000000,38,7,4
+130,Terrace House,1582,0,3.0,645000,Selangor,Kelana Jaya,408,645000,31,15,2
+131,Town House,2131,0,3.0,980000,Selangor,Sunway Damansara,460,980000,36,7,2
+132,Terrace House,1227,0,4.0,715000,Selangor,Tropicana,583,715000,35,9,1
+133,Terrace House,1399,0,3.0,690000,Selangor,Puchong,493,690000,7,0,1
+134,Terrace House,1399,0,2.0,50000,Selangor,Telok Panglima Garang,36,50000,7,0,2
+135,Terrace House,1399,0,3.0,265000,Selangor,USJ,189,265000,16,1,1
+136,Terrace House,1195,0,3.0,440000,Selangor,Banting,368,440000,4,0,1
+137,Terrace House,1399,0,4.0,270000,Selangor,Banting,193,270000,6,0,2
+138,Terrace House,840,0,2.0,100000,Selangor,Tanjong Sepat,119,100000,4,0,0
+139,Terrace House,1981,0,3.0,600000,Selangor,Seri Kembangan,303,600000,16,4,0
+140,Terrace House,1399,0,4.0,535700,Selangor,Jenjarom,383,535700,4,0,1
+141,Hotel/Service Apartment,484,1,0.0,325000,Selangor,Setia Alam/Alam Nusantara,671,325000,12,0,0
+142,Hotel/Service Apartment,624,1,2.0,475000,Selangor,Petaling Jaya,761,475000,42,8,4
+143,Hotel/Service Apartment,904,1,3.0,502000,Selangor,Seri Kembangan,555,502000,16,4,0
+144,Terrace House,3337,0,3.0,1100000,Selangor,USJ,330,1100000,35,8,1
+145,Terrace House,1561,0,3.0,675000,Selangor,USJ,432,675000,42,12,3
+146,Terrace House,2476,0,3.0,850000,Selangor,USJ,343,850000,26,5,2
+147,Terrace House,1195,0,3.0,740000,Selangor,USJ,619,740000,33,7,1
+148,Condominium/Apartment,1539,1,3.0,120000,Selangor,Batu 9th Cheras,78,120000,14,2,0

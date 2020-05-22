@@ -1,0 +1,167 @@
+project_id,project_name,transacted_price,unit_price_psf,date,property_type,tenure,floor,area_sqft,non_landed,bedrooms,street_name,psf,price,state,planning_region
+10113,Kepong Baru,610000,310,1576454400,Terrace House,Leasehold,None,1970,0,3,JALAN HELANG,310,610000,Kuala Lumpur,Kepong
+10113,Kepong Baru,720000,468,1576195200,Terrace House,Leasehold,None,1539,0,3,LORONG LANG HITAM 6,468,720000,Kuala Lumpur,Kepong
+10113,Kepong Baru,670000,435,1576108800,Terrace House,Leasehold,None,1539,0,3,JALAN LANG KEPALA PUTIH,435,670000,Kuala Lumpur,Kepong
+10113,Kepong Baru,1100000,336,1575936000,Terrace House,Leasehold,None,3272,0,3,JALAN CHIAK RAYA,336,1100000,Kuala Lumpur,Kepong
+16814,Bandar Tun Razak (Kampung Konggo),280000,283,1575936000,Cluster House,Leasehold,None,990,0,2,JALAN JUJUR 3,283,280000,Kuala Lumpur,Bandar Tun Razak
+16814,Bandar Tun Razak (Kampung Konggo),410000,305,1575590400,Cluster House,Leasehold,None,1346,0,3,LORONG MEWAH 5,305,410000,Kuala Lumpur,Bandar Tun Razak
+16814,Bandar Tun Razak (Kampung Konggo),500000,294,1575590400,Cluster House,Leasehold,None,1701,0,2,LORONG IKHLAS 1,294,500000,Kuala Lumpur,Bandar Tun Razak
+16319,Sri Putramas I,450000,410,1577145600,Condominium/Apartment,Leasehold,16,1098,1,3,JALAN PUTRAMAS 1,410,450000,Kuala Lumpur,Dutamas
+16319,Sri Putramas I,438000,399,1575331200,Condominium/Apartment,Leasehold,1,1098,1,3,JALAN PUTRAMAS 1,399,438000,Kuala Lumpur,Dutamas
+16319,Sri Putramas I,410000,373,1575331200,Condominium/Apartment,Leasehold,11,1098,1,3,JALAN PUTRAMAS 1,373,410000,Kuala Lumpur,Dutamas
+17003,Taman Tun Dr Ismail (TTDI),1390000,742,1576800000,Terrace House,Leasehold,None,1873,0,4,LENGKOK AMINUDDIN BAKI,742,1390000,Kuala Lumpur,Taman Tun Dr Ismail
+17003,Taman Tun Dr Ismail (TTDI),1635000,858,1576713600,Terrace House,Leasehold,None,1905,0,4,JALAN DATUK SULAIMAN 4,858,1635000,Kuala Lumpur,Taman Tun Dr Ismail
+17003,Taman Tun Dr Ismail (TTDI),1600000,840,1575244800,Terrace House,Leasehold,None,1905,0,4,JALAN DATUK SULAIMAN 3,840,1600000,Kuala Lumpur,Taman Tun Dr Ismail
+25133,Bandar Menjalara (Desa Seri Mahkota),790000,480,1576454400,Terrace House,Leasehold,None,1647,0,3,JALAN 6/62,480,790000,Kuala Lumpur,Bandar Menjalara
+25133,Bandar Menjalara (Desa Seri Mahkota),480000,544,1575504000,Terrace House,Leasehold,None,883,0,3,JALAN 15/62B,544,480000,Kuala Lumpur,Bandar Menjalara
+9153,Casa Ria,375000,348,1576454400,Condominium/Apartment,Leasehold,2,1076,1,3,JALAN JEJAKA,348,375000,Kuala Lumpur,Cheras
+9153,Casa Ria,450000,402,1575158400,Condominium/Apartment,Leasehold,7,1119,1,3,JALAN JEJAKA,402,450000,Kuala Lumpur,Cheras
+29292,DESA PARK CITY (SOUTH LAKE),1900000,1154,1577664000,Terrace House,Leasehold,None,1647,0,4,JALAN DENAI SELATAN,1154,1900000,Kuala Lumpur,None
+29292,DESA PARK CITY (SOUTH LAKE),1800000,1093,1576022400,Terrace House,Leasehold,None,1647,0,4,JALAN DENAI SELATAN,1093,1800000,Kuala Lumpur,None
+10264,Lanai Kiara,600000,419,1575936000,Condominium/Apartment,Leasehold,18,1432,1,3,JALAN 1/61A,419,600000,Kuala Lumpur,Mont Kiara
+10264,Lanai Kiara,550000,384,1575417600,Condominium/Apartment,Leasehold,3,1432,1,3,JALAN 1/61A,384,550000,Kuala Lumpur,Mont Kiara
+11721,Sri Penaga,1960000,1006,1575331200,Condominium/Apartment,Leasehold,14,1948,1,2,JALAN MEDANG SERAI,1006,1960000,Kuala Lumpur,Bangsar
+11721,Sri Penaga,1075000,1051,1575244800,Condominium/Apartment,Leasehold,13,1023,1,3,JALAN MAAROF,1051,1075000,Kuala Lumpur,Bangsar
+12099,Taman Bukit Maluri,770000,436,1577750400,Terrace House,Leasehold,None,1765,0,3,JALAN BUKIT MALURI 11,436,770000,Kuala Lumpur,Kepong
+12099,Taman Bukit Maluri,800000,427,1575936000,Terrace House,Leasehold,None,1873,0,3,JALAN BUKIT MALURI 2,427,800000,Kuala Lumpur,Kepong
+12699,Taman OUG,743000,463,1576022400,Terrace House,Leasehold,None,1604,0,4,JALAN AWAN MERAH,463,743000,Kuala Lumpur,Taman OUG
+12699,Taman OUG,985000,598,1575849600,Terrace House,Leasehold,None,1647,0,3,JALAN HUJAN MANIK,598,985000,Kuala Lumpur,Taman OUG
+13464,The Tamarind,660000,491,1577145600,Condominium/Apartment,Leasehold,26,1346,1,2,JALAN SENTUL INDAH,491,660000,Kuala Lumpur,Sentul
+13464,The Tamarind,610000,453,1576454400,Condominium/Apartment,Leasehold,23,1346,1,4,JALAN SENTUL INDAH,453,610000,Kuala Lumpur,Sentul
+10859,BAC Residence (Shresta Flat),100000,116,1575849600,Condominium/Apartment,Leasehold,127,861,1,2,JALAN SULTAN ABDUL SAMAD(TONG FATT MANSION,116,100000,Kuala Lumpur,Brickfields
+16177,Bandar Baru Sri Petaling,1100000,469,1576627200,Terrace House,Leasehold,None,2347,0,3,JALAN 8/149K,469,1100000,Kuala Lumpur,Bandar Baru Sri Petaling
+8918,Bayu Angkasa,900000,573,1575504000,Condominium/Apartment,Leasehold,8,1572,1,2,JALAN MEDANG KAPAS,573,900000,Kuala Lumpur,Bangsar
+9014,Bougainvilla,300000,268,1576540800,Condominium/Apartment,Leasehold,12,1119,1,3,JALAN 1/62B,268,300000,Kuala Lumpur,Pudu
+14097,Camellia service suites,234225,272,1577059200,Hotel/Service Apartment,Leasehold,19,861,1,1,CAMELLIA SERVICE SUITE,272,234225,Kuala Lumpur,Bangsar South
+9143,Casa Mutiara Service Apartment,300000,733,1575417600,Hotel/Service Apartment,Leasehold,15,409,1,2,JALAN HANG ISAP,733,300000,Kuala Lumpur,Pudu
+16828,Damansara Heights (Bukit Damansara),1650000,713,1575504000,Terrace House,Leasehold,None,2314,0,4,LORONG SETIABISTARI 1,713,1650000,Kuala Lumpur,Damansara
+17240,Danau Kota,199000,284,1575244800,Flat,Leasehold,19,700,1,3,JALAN TAMAN IBU KOTA,284,199000,Kuala Lumpur,Setapak
+9113,Desa Melawati,1910000,551,1575244800,Terrace House,Leasehold,None,3466,0,4,JALAN DESA MELAWATI 1A,551,1910000,Kuala Lumpur,Wangsa Maju
+9171,Desa ParkCity (Casaman),3150000,1682,1575936000,Terrace House,Leasehold,None,1873,0,3,CANGKAT INTISARI,1682,3150000,Kuala Lumpur,Desa Parkcity
+10299,Desa ParkCity (LeVenue),4500000,709,1576195200,Semi-Detached House,Leasehold,None,6351,0,7,JALAN DESA RESIDEN,709,4500000,Kuala Lumpur,Desa Parkcity
+9501,Desa Permai,600000,485,1575158400,Condominium/Apartment,Leasehold,G,1238,1,3,JALAN MORIB,485,600000,Kuala Lumpur,Taman Desa
+24933,Eco Sky ,680000,554,1575590400,Hotel/Service Apartment,Leasehold,29,1227,1,3,BATU 6 1/2,554,680000,Kuala Lumpur,Jalan Ipoh
+9673,Fortune Avenue,590000,457,1576454400,Hotel/Service Apartment,Leasehold,15,1292,1,3,JALAN METRO PERDANA,457,590000,Kuala Lumpur,Kepong
+17243,Happy Garden (Taman Gembira),802000,521,1575590400,Terrace House,Leasehold,None,1539,0,3,JALAN RIANG,521,802000,Kuala Lumpur,Kuchai Lama
+14316,Hartamas Regency,830000,454,1575849600,Condominium/Apartment,Leasehold,2,1830,1,3,OFF JALAN SEGAMBUT,454,830000,Kuala Lumpur,Dutamas
+25495,Jalan Cheras,560000,733,1576022400,Hotel/Service Apartment,Leasehold,12,764,1,None,JALAN CHERAS,733,560000,Kuala Lumpur,Cheras
+26244,Jalan Sri Hartamas,550000,824,1577318400,Hotel/Service Apartment,Leasehold,15,667,1,None,JALAN SRI HARTAMAS,824,550000,Kuala Lumpur,None
+26245,Jalan Stonor,2650000,789,1575417600,Condominium/Apartment,Leasehold,17,3358,1,6,JALAN STONOR,789,2650000,Kuala Lumpur,None
+9963,Jalil Damai Apartments,350000,378,1575417600,Condominium/Apartment,Leasehold,13,926,1,3,JALAN 14/155C,378,350000,Kuala Lumpur,Bukit Jalil
+10103,Kenanga Point,355000,412,1576627200,Condominium/Apartment,Leasehold,9,861,1,3,JALAN GELUGOR,412,355000,Kuala Lumpur,Pudu
+10125,Kiara Designer Suites,820000,573,1575417600,Hotel/Service Apartment,Leasehold,7,1432,1,3,JALAN KIARA 3,573,820000,Kuala Lumpur,Mont Kiara
+16891,Kiara View Sungai Penchala,3700000,618,1575331200,Semi-Detached House,Leasehold,None,5985,0,5,JALAN PUNCAK KIARA INDAH,618,3700000,Kuala Lumpur,Kampung Sungai Penchala
+10254,Laman Midah,430000,540,1575936000,Condominium/Apartment,Leasehold,10,797,1,3,JALAN MIDAH 8,540,430000,Kuala Lumpur,Cheras
+10389,Meadow Park 3 (Washington Tower),120000,114,1575417600,Condominium/Apartment,Leasehold,12,1055,1,3,JALAN 1/130,114,120000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road)
+14466,Melati Utama,410000,307,1575849600,Condominium/Apartment,Leasehold,3A,1335,1,4,JALAN TAMAN MELATI,307,410000,Kuala Lumpur,Setapak
+10426,Menara Alpha,335000,366,1575417600,Condominium/Apartment,Leasehold,2,915,1,3,JALAN 4/27A,366,335000,Kuala Lumpur,Wangsa Maju
+14487,Menjalara 18,535000,414,1575849600,Condominium/Apartment,Leasehold,9,1292,1,5,JALAN 1/62,414,535000,Kuala Lumpur,Bandar Menjalara
+24915,Midfields 2,184803,177,1577318400,Condominium/Apartment,Leasehold,21,1044,1,3,JALAN BESI KAWI,177,184803,Kuala Lumpur,Salak Selatan
+10597,Mont Kiara Banyan,1500000,567,1575417600,Condominium/Apartment,Leasehold,11,2648,1,4,JALAN KIARA,567,1500000,Kuala Lumpur,Mont Kiara
+10598,Mont Kiara Bayu,570000,540,1576195200,Condominium/Apartment,Leasehold,36,1055,1,2,JALAN 3,540,570000,Kuala Lumpur,Mont Kiara
+14815,Pangsapuri Bandaraya Gombak,185000,331,1575417600,Flat,Leasehold,4,560,1,2,OFF JALAN GOMBAK,331,185000,Kuala Lumpur,Setapak
+10820,Pantai Panorama,450000,615,1575417600,Condominium/Apartment,Leasehold,3,732,1,3,JALAN 112H,615,450000,Kuala Lumpur,Pantai Dalam/Kerinchi
+10875,Pearl Point Condominium,360000,307,1575849600,Condominium/Apartment,Leasehold,24,1173,1,3,JALAN SEPADU 3,307,360000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road)
+16912,PKNS Ulu Kelang,200000,364,1576022400,Condominium/Apartment,Leasehold,None,549,1,2,None,364,200000,Kuala Lumpur,Taman Setiawangsa
+11096,Prisma Perdana,288000,352,1576540800,Condominium/Apartment,Leasehold,12,818,1,3,JALAN MIDAH 8A,352,288000,Kuala Lumpur,Cheras
+24953,Residensi Razakmas,485000,474,1576540800,Condominium/Apartment,Leasehold,27,1023,1,3,JALAN BAKTI,474,485000,Kuala Lumpur,Bandar Tun Razak
+11460,Serene Kiara,2670000,813,1575849600,Semi-Detached House,Leasehold,None,3283,0,5,JALAN SERENE KIARA 4,813,2670000,Kuala Lumpur,Sri Hartamas
+11563,Sinaran TTDI,1840000,774,1576540800,Hotel/Service Apartment,Leasehold,23,2379,1,4,JALAN TUN MOHD FUAD 4,774,1840000,Kuala Lumpur,Taman Tun Dr Ismail
+11657,Sri Desa Entrepreneur's Park,210000,184,1577059200,Flat,Leasehold,3,1141,1,3,JALAN 9/116B,184,210000,Kuala Lumpur,Kuchai Lama
+12062,Taman Bukit Cheras,700000,468,1576195200,Terrace House,Leasehold,None,1496,0,4,JALAN 6/144A,468,700000,Kuala Lumpur,Cheras
+12065,Taman Bukit Desa,2050000,683,1575504000,Terrace House,Leasehold,None,3003,0,4,JALAN TAMAN BUKIT DESA,683,2050000,Kuala Lumpur,Kepong
+16992,Taman Bukit Mewah,700000,489,1575244800,Terrace House,Leasehold,None,1432,0,3,JALAN LANCANG,489,700000,Kuala Lumpur,Cheras
+12190,Taman Continental,680000,402,1575849600,Terrace House,Leasehold,None,1690,0,3,JALAN RUKUN 6,402,680000,Kuala Lumpur,Kuchai Lama
+16961,Taman Desa,1420000,532,1577318400,Terrace House,Leasehold,None,2669,0,3,JALAN DESA UTAMA,532,1420000,Kuala Lumpur,Taman Desa
+16976,Taman Lian Hoe,750000,326,1576108800,Semi-Detached House,Leasehold,None,2303,0,3,JALAN KUCHAI 6,326,750000,Kuala Lumpur,Kuchai Lama
+12560,Taman Maluri,580000,352,1575504000,Terrace House,Leasehold,None,1647,0,4,JALAN PRIA,352,580000,Kuala Lumpur,Cheras
+17248,Taman Megah Kepong,915000,654,1576627200,Terrace House,Leasehold,None,1399,0,3,JALAN 7/39,654,915000,Kuala Lumpur,Kepong
+16978,Taman Melewar,425000,265,1577318400,Terrace House,Leasehold,None,1604,0,3,JALAN BATU GELIGA,265,425000,Kuala Lumpur,Gombak
+22915,Taman Salak Selatan,600000,390,1575590400,Terrace House,Leasehold,None,1539,0,4,JALAN PERKASA 10,390,600000,Kuala Lumpur,Salak Selatan
+12920,Taman Seputeh,1300000,542,1575417600,Terrace House,Leasehold,None,2400,0,3,JALAN SEPUTEH 2,542,1300000,Kuala Lumpur,Seputeh
+13082,Taman Sri Rampai,470000,533,1576454400,Terrace House,Leasehold,None,883,0,3,JALAN 3/26,533,470000,Kuala Lumpur,Setapak
+13092,Taman Sri Sinar,388000,644,1575331200,Terrace House,Leasehold,None,603,0,3,JALAN 27/38A,644,388000,Kuala Lumpur,Segambut
+13154,Taman Tan Yew Lai,988000,363,1575936000,Semi-Detached House,Leasehold,None,2723,0,7,JALAN BUKIT TINGGI,363,988000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road)
+13169,Taman Taynton View,580000,352,1575590400,Terrace House,Leasehold,None,1647,0,3,JALAN MAHADEVI,352,580000,Kuala Lumpur,Cheras
+25349,Taman Teratai Mewah,240000,365,1575590400,Condominium/Apartment,Leasehold,7,657,1,2,OFF JALAN LANGKAWI,365,240000,Kuala Lumpur,Setapak
+13228,Taman Wahyu,700000,425,1576627200,Terrace House,Leasehold,None,1647,0,3,JALAN SIBU 4,425,700000,Kuala Lumpur,Kepong
+17004,Taman Yarl,2600000,501,1576108800,Semi-Detached House,Leasehold,None,5188,0,5,LORONG AWAN BIRU,501,2600000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road)
+13334,The Elements,450000,450,1576195200,Hotel/Service Apartment,Leasehold,3A,1001,1,3,JALAN BEMBAN,450,450000,Kuala Lumpur,Ampang
+13510,Tiffani Kiara,1360000,607,1575504000,Condominium/Apartment,Leasehold,33,2239,1,4,CHANGKAT DUTA KIARA,607,1360000,Kuala Lumpur,Mont Kiara
+13520,Tivoli Villas,1497000,621,1575417600,Condominium/Apartment,Leasehold,8,2411,1,3,JALAN MEDANG TANDUK,621,1497000,Kuala Lumpur,Bangsar
+13652,Villa Aman,1600000,551,1575936000,Condominium/Apartment,Leasehold,2,2906,1,5,JALAN RITCHIE,551,1600000,Kuala Lumpur,Ampang Hilir
+10138,Villa Bahagia,1300000,694,1576022400,Condominium/Apartment,Leasehold,23,1873,1,4,CHANGKAT DUTA KIARA,694,1300000,Kuala Lumpur,Salak Selatan
+13690,Villa Mont Kiara,7200000,1376,1576540800,Detached House,Leasehold,None,5231,0,7,JALAN BUKIT KIARA,1376,7200000,Kuala Lumpur,Mont Kiara
+13230,Wangsa Melawati,450000,510,1575936000,Terrace House,Leasehold,None,883,0,2,LORONG WANGSA CERIA 1C,510,450000,Kuala Lumpur,Wangsa Maju
+15138,West Court Taman Sri Sentosa,350000,378,1576540800,Hotel/Service Apartment,Leasehold,None,926,1,3,JALAN KELANG LAMA,378,350000,Kuala Lumpur,Jalan Klang Lama (Old Klang Road)
+28340,Serenia City,611888,406,1577145600,Terrace House,Leasehold,None,1507,0,3,JALAN AMAN SERENIA 7/10 BANDAR SERENIA,406,611888,Selangor,Dengkil
+28340,Serenia City,599888,398,1577145600,Terrace House,Leasehold,None,1507,0,3,JALAN AMAN SERENIA 7/9 BANDAR SERENIA,398,599888,Selangor,Dengkil
+28340,Serenia City,611888,406,1577145600,Terrace House,Leasehold,None,1507,0,4,JALAN AMAN SERENIA 7/9 BANDAR SERENIA,406,611888,Selangor,Dengkil
+28340,Serenia City,611888,406,1577145600,Terrace House,Leasehold,None,1507,0,3,JALAN AMAN SERENIA 7/9 BANDAR SERENIA,406,611888,Selangor,Dengkil
+28340,Serenia City,611888,406,1577145600,Terrace House,Leasehold,None,1507,0,3,JALAN AMAN SERENIA 7/10 BANDAR SERENIA,406,611888,Selangor,Dengkil
+28340,Serenia City,611888,406,1577145600,Terrace House,Leasehold,None,1507,0,3,JALAN AMAN SERENIA 7/12 BANDAR SERENIA,406,611888,Selangor,Dengkil
+28340,Serenia City,655888,393,1577145600,Terrace House,Leasehold,None,1668,0,3,JALAN AMAN SERENIA 2/2 BANDAR SERENIA,393,655888,Selangor,Dengkil
+28340,Serenia City,611888,406,1577059200,Terrace House,Leasehold,None,1507,0,3,JALAN AMAN SERENIA 7/12 BANDAR SERENIA,406,611888,Selangor,Dengkil
+28340,Serenia City,713888,249,1576281600,Terrace House,Leasehold,None,2863,0,4,JALAN AMAN SERENIA 5/7 BANDAR SERENIA,249,713888,Selangor,Dengkil
+28340,Serenia City,599888,398,1575331200,Terrace House,Leasehold,None,1507,0,3,JALAN AMAN SERENIA 7/9 BANDAR SERENIA,398,599888,Selangor,Dengkil
+11518,Setia Ecohill,470000,361,1576454400,Terrace House,Leasehold,None,1302,0,4,JALAN ECOHILL 1/3B,361,470000,Selangor,Semenyih
+11518,Setia Ecohill,1280000,271,1575849600,Semi-Detached House,Leasehold,None,4715,0,4,JALAN ECOHILL 3/1C,271,1280000,Selangor,Semenyih
+11518,Setia Ecohill,1338000,284,1575849600,Semi-Detached House,Leasehold,None,4715,0,4,JALAN ECOHILL 3/1B,284,1338000,Selangor,Semenyih
+28534,Taman Villa Perdana,1560000,434,1576713600,Semi-Detached House,Leasehold,None,3595,0,6,JALAN VILLA PERDANA 6,434,1560000,Selangor,Telok Panglima Garang
+28534,Taman Villa Perdana,1560000,434,1576713600,Semi-Detached House,Leasehold,None,3595,0,6,JALAN VILLA PERDANA 6,434,1560000,Selangor,Telok Panglima Garang
+28534,Taman Villa Perdana,1625000,402,1576713600,Semi-Detached House,Leasehold,None,4047,0,6,JALAN VILLA PERDANA 6,402,1625000,Selangor,Telok Panglima Garang
+28428,Jenderam Impian,550000,429,1575244800,Terrace House,Leasehold,None,1281,0,4,JALAN KAJANG-DENGKIL,429,550000,Selangor,Dengkil
+28428,Jenderam Impian,550000,429,1575244800,Terrace House,Leasehold,None,1281,0,4,JALAN KAJANG-DENGKIL,429,550000,Selangor,Dengkil
+12792,Puncak Utama,380000,265,1576454400,Terrace House,Leasehold,None,1432,0,3,JALAN PUNCAK 1/11,265,380000,Selangor,Kajang
+12792,Puncak Utama,505000,340,1576454400,Terrace House,Leasehold,None,1485,0,4,JALAN PUNCAK UTAMA 2/3A,340,505000,Selangor,Kajang
+11769,SS 19 Subang Jaya,3000000,371,1575331200,Detached House,Leasehold,None,8084,0,5,JALAN SS 19/4E,371,3000000,Selangor,Subang Jaya
+11769,SS 19 Subang Jaya,390000,541,1575244800,Terrace House,Leasehold,None,721,0,3,JALAN SS 19/6,541,390000,Selangor,Subang Jaya
+15193,Strand Residensi,485000,617,1575331200,Hotel/Service Apartment,Leasehold,9,786,1,2,JALAN PJU 5/23,617,485000,Selangor,Kota Damansara
+15193,Strand Residensi,1050000,723,1575331200,Hotel/Service Apartment,Leasehold,23,1453,1,3,JALAN PJU 5/23,723,1050000,Selangor,Kota Damansara
+23628,Taman Indah Puteri,468060,146,1577491200,Semi-Detached House,Leasehold,None,3197,0,4,JALAN IP 28,146,468060,Selangor,Sepang
+23628,Taman Indah Puteri,468060,146,1577491200,Semi-Detached House,Leasehold,None,3197,0,3,JALAN IP 28,146,468060,Selangor,Sepang
+28531,Taman Sri Pelangi,438800,285,1575417600,Terrace House,Leasehold,None,1539,0,4,JALAN SUNGAI RABA,285,438800,Selangor,
+28531,Taman Sri Pelangi,438800,285,1575417600,Terrace House,Leasehold,None,1539,0,4,JALAN SUNGAI RABA,285,438800,Selangor,
+8835,Bandar Bukit Raja,665000,441,1575244800,Terrace House,Leasehold,None,1507,0,4,JALAN NGAJAT 3/KU5,441,665000,Selangor,Bandar Bukit Raja
+14042,Bandar Mahkota Banting (Brooklands),335000,203,1577577600,Terrace House,Leasehold,None,1647,0,4,JALAN ANGKASA,203,335000,Selangor,Banting
+8873,Bangi Avenue,490000,376,1576454400,Terrace House,Leasehold,None,1302,0,4,JALAN BANGI AVENUE 6/10,376,490000,Selangor,Bangi
+9233,Cheras Vista,693000,450,1576627200,Terrace House,Leasehold,None,1539,0,4,JALAN VISTA 3/1A,450,693000,Selangor,Cheras South
+14151,Cyberia SmartHome,322896,353,1575936000,Condominium/Apartment,Leasehold,10,915,1,3,PERSIARAN MULTIMEDIA,353,322896,Selangor,Cyberjaya
+9435,Denai Alam,230000,209,1576195200,Terrace House,Leasehold,None,1098,0,3,JALAN 2A,209,230000,Selangor,Denai Alam
+9470,Desa Impiana Taman Puchong Prima,320000,306,1575590400,Condominium/Apartment,Leasehold,10,1044,1,3,JALAN PRIMA UTAMA,306,320000,Selangor,Puchong
+23964,Elmina West @ Denai Alam,690000,493,1576368000,Terrace House,Leasehold,None,1399,0,4,JALAN METAFASA U16/161,493,690000,Selangor,Shah Alam
+15080,Hillside Estate,499000,283,1576454400,Terrace House,Leasehold,None,1765,0,4,JALAN HILLSIDE ESTATE,283,499000,Selangor,Ampang
+9867,Idaman Apartment,60000,93,1577318400,Flat,Leasehold,G,646,1,3,JALAN PJU 10/1,93,60000,Selangor,Damansara Damai
+9886,Ilham Apartment TTDI Jaya,225000,286,1576454400,Condominium/Apartment,Leasehold,13,786,1,3,JALAN SASTERA U2/1,286,225000,Selangor,Taman TTDI Jaya
+9895,Impian Meridian,500000,394,1575244800,Hotel/Service Apartment,Leasehold,15,1270,1,3,JALAN SUBANG 1,394,500000,Selangor,USJ
+15724,Kelana D'Putera,458000,398,1576022400,Condominium/Apartment,Leasehold,16,1152,1,3,JALAN SS 7/26,398,458000,Selangor,Kelana Jaya
+10167,Koi Tropika,380000,384,1575244800,Condominium/Apartment,Leasehold,3A,990,1,3,JALAN PUCHONG BATU 13 1/2,384,380000,Selangor,Bandar Puteri Puchong
+10919,Mirage By The Lake @ Perdana Lakeview West,912800,902,1576627200,Condominium/Apartment,Leasehold,6,1012,1,3,JALAN MIRAGE 2,902,912800,Selangor,Cyberjaya
+10789,Palmville,800000,459,1576454400,Condominium/Apartment,Leasehold,8,1744,1,3,JALAN LAGOON TIMUR,459,800000,Selangor,Bandar Sunway
+8643,Pangsapuri PKNS SS3,130000,216,1577318400,Condominium/Apartment,Leasehold,14,603,1,2,JALAN SS 3/39,216,130000,Selangor,Kelana Jaya
+14779,Perdana Selatan,400000,391,1575849600,Hotel/Service Apartment,Leasehold,20,1023,1,3,PERDANA SELATAN,391,400000,Selangor,Seri Kembangan
+15892,Pusat Perhentian Kajang,80000,111,1576195200,Flat,Leasehold,13,721,1,3,JALAN HENTIAN 5,111,80000,Selangor,Kajang
+11310,Saujana Impian,450000,454,1575244800,Terrace House,Leasehold,None,990,0,3,JALAN IMPIAN MURNI 3/9,454,450000,Selangor,Kajang
+11355,Section 10 Petaling Jaya,550000,341,1575331200,Terrace House,Leasehold,None,1615,0,3,JALAN 10/10A,341,550000,Selangor,Petaling Jaya
+22714,Seksyen 32 Shah Alam,385000,325,1576195200,Terrace House,Leasehold,None,1184,0,3,JALAN SUNGAI LONG 32/155,325,385000,Selangor,Shah Alam
+17114,Sierra 1 Odora Parkhomes,529900,285,1575244800,Town House,Leasehold,None,1862,0,3,JALAN SIERRA 1/3,285,529900,Selangor,Puchong South
+13978,SS 20 Damansara Utama,1000000,607,1575244800,Terrace House,Leasehold,None,1647,0,4,JALAN SS 20/16,607,1000000,Selangor,Damansara Utama
+11773,SS 5 Kelana Jaya,645000,408,1575849600,Terrace House,Leasehold,None,1582,0,3,JALAN SS 5A/15,408,645000,Selangor,Kelana Jaya
+9072,Sunway Damansara,980000,460,1577750400,Town House,Leasehold,None,2131,0,3,JALAN PJU 3/30,460,980000,Selangor,Sunway Damansara
+12101,Taman Bukit Mayang Emas,715000,583,1575244800,Terrace House,Leasehold,None,1227,0,4,JALAN BM 1/1,583,715000,Selangor,Tropicana
+12610,Taman Meranti Jaya,690000,493,1575590400,Terrace House,Leasehold,None,1399,0,3,JALAN MERANTI JAYA 1/11,493,690000,Selangor,Puchong
+22811,Taman Panglima,50000,36,1575331200,Terrace House,Leasehold,None,1399,0,2,JALAN TOMBAK,36,50000,Selangor,Telok Panglima Garang
+13999,Taman Pinggiran USJ ,265000,189,1575331200,Terrace House,Leasehold,None,1399,0,3,JALAN PINGGIRAN USJ 3/3,189,265000,Selangor,USJ
+23571,Taman Sri Dagang,440000,368,1575331200,Terrace House,Leasehold,None,1195,0,3,JALAN SD1 1/25,368,440000,Selangor,Banting
+13079,Taman Sri Putra,270000,193,1575417600,Terrace House,Leasehold,None,1399,0,4,JALAN TOMAN 6,193,270000,Selangor,Banting
+16049,Taman Tanjung Tanjung Sepat,100000,119,1576454400,Terrace House,Leasehold,None,840,0,2,JALAN TAMAN TANJUNG,119,100000,Selangor,Tanjong Sepat
+13218,Taman Universiti Indah,600000,303,1575936000,Terrace House,Leasehold,None,1981,0,3,JALAN INDAH 1/28,303,600000,Selangor,Seri Kembangan
+15566,Tamera Residence,535700,383,1577232000,Terrace House,Leasehold,None,1399,0,4,JALAN 3/10,383,535700,Selangor,Jenjarom
+21820,Trefoil,325000,671,1576195200,Hotel/Service Apartment,Leasehold,36,484,1,None,JALAN SETIA DAGANG AH U13/AH,671,325000,Selangor,Setia Alam/Alam Nusantara
+13538,Tropicana City Tropics,475000,761,1576454400,Hotel/Service Apartment,Leasehold,8,624,1,2,JALAN SS 20/27,761,475000,Selangor,Petaling Jaya
+13580,Univ 360 Place,502000,555,1576195200,Hotel/Service Apartment,Leasehold,6,904,1,3,JALAN RAYA 2,555,502000,Selangor,Seri Kembangan
+13592,USJ 11,1100000,330,1575936000,Terrace House,Leasehold,None,3337,0,3,JALAN USJ 11/7,330,1100000,Selangor,USJ
+13600,USJ 2,675000,432,1575244800,Terrace House,Leasehold,None,1561,0,3,JALAN USJ 2/4E,432,675000,Selangor,USJ
+13603,USJ 22,850000,343,1575763200,Terrace House,Leasehold,None,2476,0,3,JALAN USJ 22/2B,343,850000,Selangor,USJ
+13606,USJ 3,740000,619,1575849600,Terrace House,Leasehold,None,1195,0,3,JALAN USJ 3/4B,619,740000,Selangor,USJ
+13632,Venice Hill,120000,78,1576713600,Condominium/Apartment,Leasehold,B33/A/3,1539,1,3,PERSIARAN PUTERI 1,78,120000,Selangor,Batu 9th Cheras
