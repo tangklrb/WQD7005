@@ -1,7 +1,12 @@
 import json
+import pickle
 import numpy as np
 import pandas as pd
 from geopy.distance import distance
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+from sklearn.compose import make_column_transformer
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LinearRegression
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
@@ -48,6 +53,43 @@ def nearest_poi():
   return(json.dumps({
     'nearest_poi': pois['distance'].min()
   }))
+
+@app.route('/predict-price/', methods=['POST'])
+def predict_price():
+  if request.method == "POST":
+    data = request.form
+    error_messages = list()
+
+    if not is_float(data['area_sqft']):
+      error_messages.append("Please enter a valid number for Area (sqft)")
+
+    if len(data['city']) == 0:
+      error_messages.append("Please pick the location from map and select the nearest city")
+
+    if len(error_messages) > 0:
+      return (json.dumps({
+        "status": "Error",
+        "message": "<br/>".join(error_messages)
+      }))
+
+    input_features = pd.DataFrame([data])
+    model = pickle.load(open('../data/model.pkl', 'rb'))
+    predicted_price = model.predict(input_features)
+
+    return ({
+      "status": "Predicted Price",
+      "message": predicted_price[0]
+    })
+  else:
+    return ('{ "status": "Error", "message": "No data are posted"}')
+
+
+def is_float(n):
+  try:
+    float(n)
+    return True
+  except ValueError:
+    return False
 
 
 if __name__ == '__main__':
