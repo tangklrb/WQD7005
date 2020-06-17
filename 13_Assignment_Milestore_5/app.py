@@ -64,7 +64,7 @@ def predict_price():
       error_messages.append("Please enter a valid number for Area (sqft)")
 
     if len(data['city']) == 0:
-      error_messages.append("Please pick the location from map and select the nearest city")
+      error_messages.append("Coverage: Kuala Lumpur, Selangor, Penang & Johor only. Please pick the property location from map and select the nearest city")
 
     if len(error_messages) > 0:
       return (json.dumps({

@@ -105,7 +105,7 @@
         <div id="map"></div>
         <div id="prediction-box" class="registration-form">
             <header>
-                <p>Pick property location from the map</br>and fill the following information</p>
+                <p>Pick the property location from the map</br>and fill the following information</p>
             </header>
 
             <form action="" id="predict_price" name="predict_price">
@@ -185,6 +185,7 @@
         <script>
             var map;
             var markers = [];
+            // var api = 'http://localhost:9999';
             var api = 'http://35.240.173.129:8888';
 
             function initMap() {
@@ -255,9 +256,22 @@
 
                         // Populate new options
                         options = JSON.parse(this.responseText);
-                        for (index = 0; index < options.length; ++index) {
-                            option = options[index];
-                            select.options.add(new Option(option, option));
+                        if(options.length > 0) {
+                            for (index = 0; index < options.length; ++index) {
+                                option = options[index];
+                                select.options.add(new Option(option, option));
+                            }
+                            messageBox.classList.remove("alert-success");
+                            messageBox.classList.remove("alert-danger");
+                            messageBox.classList.remove("alert-primary");
+                            messageBox.innerHTML = '';
+                        } else {
+                            select.options.add(new Option('Please pick another location', ''));
+                            messageBox = document.getElementById("message_box");
+                            messageBox.classList.remove("alert-success");
+                            messageBox.classList.remove("alert-danger");
+                            messageBox.classList.add("alert-primary");
+                            messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>Signal Lost. Coverage: Kuala Lumpur, Selangor, Penang and Johor';
                         }
                     }
                 }
@@ -289,11 +303,13 @@
                         response = JSON.parse(this.responseText);
                         if(response.status == "Error") {
                             messageBox.classList.remove("alert-success");
+                            messageBox.classList.remove("alert-primary");
                             messageBox.classList.add("alert-danger");
-                            messageBox.innerHTML = '<strong>' + response.status + '</strong>' + '<br/>' + response.message;
+                            messageBox.innerHTML = '<strong>' + response.status + '</strong>' + '<br/><small>' + response.message + '</small>';
                         }
                         else {
                             messageBox.classList.remove("alert-danger");
+                            messageBox.classList.remove("alert-primary");
                             messageBox.classList.add("alert-success");
                             messageBox.innerHTML = '<strong>' + response.status + '</strong>' + '<br/><h2>RM ' + parseFloat(response.message).toFixed(2) + '</h2>';
                         }
