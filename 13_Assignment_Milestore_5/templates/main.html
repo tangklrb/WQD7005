@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WQD7005 Assignment</title>
+        <meta name="viewport" content="initial-scale=1.0">
+        <style>
+            /* Optional: Makes the sample page fill the window. */
+            html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: "Roboto";
+            }
+
+            /* background: linear-gradient(120grad, #643986, #98aed5); */
+            #title-box {
+                height: 40px;
+                width: 50%;
+                min-width: 480px;
+                max-width: 960px;
+                padding: 10px;
+                margin: auto;
+                z-index: 5;
+                border: 0px solid #000;
+                color: #171717;
+                text-align: center;
+                font-family: 'Roboto','sans-serif';
+                line-height: 40px;
+            }
+
+            /* Always set the map height explicitly to define the size of the div
+            * element that contains the map. */
+            #map {
+                height: 70%;
+                overflow: auto;
+                width: 50%;
+                min-width: 480px;
+                max-width: 960px;
+                padding: 0;
+                margin: auto;
+            }
+
+            #prediction-box {
+                display: block;
+                height: 320px;
+                width: 50%;
+                min-width: 480px;
+                max-width: 960px;
+                padding: 10px;
+                margin: auto;
+                z-index: 5;
+                border: 1px solid #999;
+                text-align: center;
+                font-family: 'Roboto','sans-serif';
+                line-height: 30px;
+            }
+
+            .form-grip-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 3fr 1fr 3fr;
+                align-items: stretch;
+                grid-gap: 8px;
+            }
+
+            .left-label {
+                grid-column-start: 1;
+                grid-column-end: 1;
+            }
+
+            .left-input {
+                grid-column-start: 2;
+                grid-column-end: 2;
+            }
+
+            .right-label {
+                grid-column-start: 3;
+                grid-column-end: 3;
+            }
+
+            .right-input {
+                grid-column-start: 4;
+                grid-column-end: 4;
+            }
+
+            .wide-input {
+                grid-column-start: 2;
+                grid-column-end: 4;
+            }
+
+            .message-box {
+                grid-column-start: 2;
+                grid-column-end: 5;
+                text-align: left;
+                line-height: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="title-box">
+            <h4>House Price Prediction</h4>
+        </div>
+        <div id="map"></div>
+        <div id="prediction-box" class="registration-form">
+            <header>
+                <p>Pick property location from the map</br>and fill the following information</p>
+            </header>
+
+            <form action="" id="predict_price" name="predict_price">
+                <input type="hidden" name="nearest_poi" id="nearest_poi" class="form-control w-100">
+                <div class="form-grip-wrapper">
+                    <div class="left-label">
+                        City
+                    </div>
+                    <div class="wide-input">
+                        <select name="city" id="city" class="form-control w-100">
+                            <option value="">Pick a location from map</option>
+                        </select>
+                    </div>
+                    <div class="left-label">
+                        Type
+                    </div>
+                    <div class="left-input">
+                        <select name="property_type" id="property_type" class="form-control w-100">
+                            <option value="Detached House">Bungalow/Detached House</option>
+                            <option value="Semi-Detached House">Semi-Detached House</option>
+                            <option value="Cluster House">Cluster House</option>
+                            <option value="Terrace House">Terrace House</option>
+                            <option value="Town House">Town House</option>
+                            <option value="Condominium/Apartment">Condominium/Apartment</option>
+                            <option value="Hotel/Service Apartment">Hotel/Service Apartment</option>
+                            <option value="Low-Cost House">Low-Cost House</option>
+                            <option value="Flat">Flat</option>
+                        </select>
+                    </div>
+                    <div class="right-label">
+                        Tenure
+                    </div>
+                    <div class="right-input">
+                        <select name="tenure" id="tenure" class="form-control w-100">
+                            <option value="Freehold">Freehold</option>
+                            <option value="Leasehold">Leasehold</option>
+                        </select>
+                    </div>
+                    <div class="left-label">
+                        Area
+                    </div>
+                    <div class="left-input">
+                        <input type="text" name="area_sqft" id="area_sqft" class="form-control w-100" placeholder="Sqft">
+                    </div>
+                    <div class="right-label">
+                        Bedrooms
+                    </div>
+                    <div class="right-input">
+                        <select name="bedrooms" id="bedrooms" class="form-control w-100">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">>10</option>
+                        </select>
+                    </div>
+                    <div class="left-label">
+                        <button type="submit" id="submit" class="btn btn-outline-primary" onclick="return false">
+                            Submit
+                        </button>
+                    </div>
+                    <div class="message-box">
+                        <div class="alert" id="message_box" name="message_box">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            var map;
+            var markers = [];
+
+            function initMap() {
+                var kualaLumpur = {lat: 3.117395, lng: 101.677355};
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: kualaLumpur,
+                mapTypeId: 'terrain'
+            });
+
+            // This event listener will call addMarker() when the map is clicked.
+            map.addListener('click', function(event) {
+                deleteMarkers();
+                addMarker(event.latLng);
+                updatePredictionBox(event.latLng);
+            });
+
+            // Adds a marker at the center of the map.
+                addMarker(kualaLumpur);
+            }
+
+            // Adds a marker to the map and push to the array.
+            function addMarker(location) {
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+                markers.push(marker);
+            }
+
+            // Sets the map on all markers in the array.
+            function setMapOnAll(map) {
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(map);
+                }
+            }
+
+            // Removes the markers from the map, but keeps them in the array.
+            function clearMarkers() {
+                setMapOnAll(null);
+            }
+
+            // Shows any markers currently in the array.
+            function showMarkers() {
+                setMapOnAll(map);
+            }
+
+            // Deletes all markers in the array by removing references to them.
+            function deleteMarkers() {
+                clearMarkers();
+                markers = [];
+            }
+
+            function updatePredictionBox(position) {
+                ajaxGetCitiesURL = 'http://localhost:8899/nearby-cities/?lat=' + position.lat() + '&lng=' + position.lng();
+                ajaxNearestPoiURL = 'http://localhost:8899/nearest-poi/?lat=' + position.lat() + '&lng=' + position.lng();
+
+                var ajaxGetCities = new XMLHttpRequest();
+                var ajaxNearestPoi = new XMLHttpRequest();
+
+                ajaxGetCities.onreadystatechange = function() {
+                    if(this.status == 200 && this.readyState == 4) {
+                        select = document.getElementById('city');
+
+                        // Clear old options
+                        select.options.length = 0;
+
+                        // Populate new options
+                        options = JSON.parse(this.responseText);
+                        for (index = 0; index < options.length; ++index) {
+                            option = options[index];
+                            select.options.add(new Option(option, option));
+                        }
+                    }
+                }
+
+                ajaxNearestPoi.onreadystatechange = function() {
+                    if(this.status == 200 && this.readyState == 4) {
+                        input = document.getElementById('nearest_poi');
+                        response = JSON.parse(this.responseText)
+                        input.value = response.nearest_poi;
+                    }
+                }
+
+                ajaxGetCities.open('GET', ajaxGetCitiesURL, true);
+                ajaxGetCities.send();
+                ajaxNearestPoi.open('GET', ajaxNearestPoiURL, true);
+                ajaxNearestPoi.send();
+            }
+
+            $( "#submit" ).click(function() {
+
+                form = document.getElementById( "predict_price" );
+
+                ajaxPredictPriceURL = 'http://localhost:8899/predict-price/';
+                var ajaxPredictPrice = new XMLHttpRequest();
+
+                ajaxPredictPrice.onreadystatechange = function() {
+                    if(this.status == 200 && this.readyState == 4) {
+                        messageBox = document.getElementById("message_box");
+                        response = JSON.parse(this.responseText);
+                        if(response.status == "Error") {
+                            messageBox.classList.remove("alert-success");
+                            messageBox.classList.add("alert-danger");
+                            messageBox.innerHTML = '<strong>' + response.status + '</strong>' + '<br/>' + response.message;
+                        }
+                        else {
+                            messageBox.classList.remove("alert-danger");
+                            messageBox.classList.add("alert-success");
+                            messageBox.innerHTML = '<strong>' + response.status + '</strong>' + '<br/><h2>RM ' + parseFloat(response.message).toFixed(2) + '</h2>';
+                        }
+                    }
+                }
+
+                ajaxPredictPrice.open('POST', ajaxPredictPriceURL, true);
+                ajaxPredictPrice.send(new FormData(form));
+
+                return false;
+            });
+        </script>
+
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7TDax06Hr4E-VRuvCid72zl4U9TVHm14&callback=initMap">
+        </script>
+    </body>
+</html>
