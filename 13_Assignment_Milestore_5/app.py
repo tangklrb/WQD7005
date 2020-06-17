@@ -73,6 +73,18 @@ def predict_price():
       }))
 
     input_features = pd.DataFrame([data])
+
+    ## if including other states
+    def state_lookup(city):
+      townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv').drop_duplicates(
+        subset='area', keep="first"
+      )
+      return townships[townships['area'] == city]['state'].iloc[0]
+
+
+    input_features['state'] = input_features['city'].apply(state_lookup)
+    ## end if
+
     model = pickle.load(open('../data/model.pkl', 'rb'))
     predicted_price = model.predict(input_features)
 
@@ -93,4 +105,4 @@ def is_float(n):
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=8899, debug=True)
+  app.run(host='0.0.0.0', port=8888, debug=True)
