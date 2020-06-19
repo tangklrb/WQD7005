@@ -310,6 +310,8 @@
                             messageBox.classList.add("alert-primary");
                             messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>No townships found near by the selected location. Coverage: Kuala Lumpur, Selangor, Penang and Johor only';
                         }
+
+                        $("#overlay").fadeOut();
                     }
 
                     if(this.status == 500) {
@@ -319,9 +321,9 @@
                         messageBox.classList.remove("alert-danger");
                         messageBox.classList.add("alert-primary");
                         messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>Error: No data available for the selected townships';
-                    }
 
-                    $("#overlay").fadeOut();
+                        $("#overlay").fadeOut();
+                    }
                 }
 
                 ajaxNearestPoi.onreadystatechange = function() {
