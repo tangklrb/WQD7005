@@ -138,17 +138,17 @@
         <div id="map"></div>
         <div id="prediction-box" class="registration-form">
             <header>
-                <p>Pick the property location from the map</br>and fill the following information</p>
+                <p>Pick the property location from the map</br>choose the closest township &amp; fill all information</p>
             </header>
 
             <form action="" id="predict_price" name="predict_price">
                 <input type="hidden" name="nearest_poi" id="nearest_poi" class="form-control w-100">
                 <div class="form-grip-wrapper">
                     <div class="left-label">
-                        City
+                        Township
                     </div>
                     <div class="wide-input">
-                        <select name="city" id="city" class="form-control w-100">
+                        <select name="project_id" id="project_id" class="form-control w-100">
                             <option value="">Pick a location from map</option>
                         </select>
                     </div>
@@ -219,8 +219,8 @@
             var map;
             var markers = [];
 
-            // var api = 'http://localhost:9999';
             var api = 'http://35.240.173.129:8888';
+            var api = 'http://localhost:9999';
 
             function initMap() {
                 var kualaLumpur = {lat: 3.117395, lng: 101.677355};
@@ -275,17 +275,17 @@
             }
 
             function updatePredictionBox(position) {
-                ajaxGetCitiesURL = api + '/nearby-cities/?lat=' + position.lat() + '&lng=' + position.lng();
+                ajaxGetTownshipsURL = api + '/nearby-townships/?lat=' + position.lat() + '&lng=' + position.lng();
                 ajaxNearestPoiURL = api + '/nearest-poi/?lat=' + position.lat() + '&lng=' + position.lng();
 
                 $("#overlay").fadeIn("slow");
 
-                var ajaxGetCities = new XMLHttpRequest();
+                var ajaxGetTownships = new XMLHttpRequest();
                 var ajaxNearestPoi = new XMLHttpRequest();
 
-                ajaxGetCities.onreadystatechange = function() {
+                ajaxGetTownships.onreadystatechange = function() {
                     if(this.status == 200 && this.readyState == 4) {
-                        select = document.getElementById('city');
+                        select = document.getElementById('project_id');
 
                         // Clear old options
                         select.options.length = 0;
@@ -295,7 +295,7 @@
                         if(options.length > 0) {
                             for (index = 0; index < options.length; ++index) {
                                 option = options[index];
-                                select.options.add(new Option(option, option));
+                                select.options.add(new Option(option.township, option.project_id));
                             }
                             messageBox = document.getElementById("message_box");
                             messageBox.classList.remove("alert-success");
@@ -308,11 +308,20 @@
                             messageBox.classList.remove("alert-success");
                             messageBox.classList.remove("alert-danger");
                             messageBox.classList.add("alert-primary");
-                            messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>Signal Lost. Coverage: Kuala Lumpur, Selangor, Penang and Johor only';
+                            messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>No townships found near by the selected location. Coverage: Kuala Lumpur, Selangor, Penang and Johor only';
                         }
-
-                        $("#overlay").fadeOut();
                     }
+
+                    if(this.status == 500) {
+                        select.options.add(new Option('Please pick another location', ''));
+                        messageBox = document.getElementById("message_box");
+                        messageBox.classList.remove("alert-success");
+                        messageBox.classList.remove("alert-danger");
+                        messageBox.classList.add("alert-primary");
+                        messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>Error: No data available for the selected townships';
+                    }
+
+                    $("#overlay").fadeOut();
                 }
 
                 ajaxNearestPoi.onreadystatechange = function() {
@@ -323,8 +332,8 @@
                     }
                 }
 
-                ajaxGetCities.open('GET', ajaxGetCitiesURL, true);
-                ajaxGetCities.send();
+                ajaxGetTownships.open('GET', ajaxGetTownshipsURL, true);
+                ajaxGetTownships.send();
                 ajaxNearestPoi.open('GET', ajaxNearestPoiURL, true);
                 ajaxNearestPoi.send();
             }
@@ -350,7 +359,7 @@
                             messageBox.classList.remove("alert-danger");
                             messageBox.classList.remove("alert-primary");
                             messageBox.classList.add("alert-success");
-                            messageBox.innerHTML = '<strong>' + response.status + '</strong>' + '<br/><h2>RM ' + parseFloat(response.message).toFixed(2) + '</h2>';
+                            messageBox.innerHTML = '<strong>' + response.status + '</strong>' + '<br/><h2>RM ' + response.message + '</h2>';
                         }
                     }
                 }
