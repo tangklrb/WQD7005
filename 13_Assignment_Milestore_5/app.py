@@ -34,6 +34,25 @@ def nearby_cities():
   return (json.dumps(list(nearby_cities['area'])))
 
 
+@app.route('/nearby-townships/', methods=['GET'])
+def nearby_townships():
+  target_coordinate = (request.args.get('lat'), request.args.get('lng'))
+
+  townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv')
+  townships['coordinates'] = list(zip(townships['latitude'], townships['longitude']))
+
+  townships['distance'] = townships['coordinates'].apply(
+    lambda x: calc_distance(x, target_coordinate)
+  )
+
+  # return all townships within 2km
+  nearby_townships_2km = townships[townships['distance'] <= 2000][
+    ['project_id', 'township', 'distance']
+  ].groupby('project_id').min().reset_index().sort_values('distance')
+
+  return (json.dumps(nearby_townships_2km.to_dict('records')))
+
+
 # calculate distance between two points
 def calc_distance(source, target):
   return (distance(source, target).m)
@@ -63,7 +82,10 @@ def predict_price():
     if not is_float(data['area_sqft']):
       error_messages.append("Please enter a valid number for Area (sqft)")
 
-    if len(data['city']) == 0:
+    # if len(data['city']) == 0:
+    #   error_messages.append("Coverage: Kuala Lumpur, Selangor, Penang & Johor only. Please pick the property location from map and select the nearest city")
+
+    if len(data['project_id']) == 0:
       error_messages.append("Coverage: Kuala Lumpur, Selangor, Penang & Johor only. Please pick the property location from map and select the nearest city")
 
     if len(error_messages) > 0:
@@ -73,27 +95,43 @@ def predict_price():
       }))
 
     input_features = pd.DataFrame([data])
+    input_features['state'] = input_features['project_id'].apply(state_lookup)
+    input_features['city'] = input_features['project_id'].apply(city_lookup)
+    input_features['project_id'] = input_features['project_id'].astype('int')
 
-    ## if including other states
-    def state_lookup(city):
-      townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv').drop_duplicates(
-        subset='area', keep="first"
-      )
-      return townships[townships['area'] == city]['state'].iloc[0]
-
-
-    input_features['state'] = input_features['city'].apply(state_lookup)
-    ## end if
+    print(input_features)
 
     model = pickle.load(open('../data/model.pkl', 'rb'))
     predicted_price = model.predict(input_features)
 
     return ({
       "status": "Predicted Price",
-      "message": predicted_price[0]
+      "message": '{:,.2f}'.format(predicted_price[0])
     })
   else:
     return ('{ "status": "Error", "message": "No data are posted"}')
+
+
+def state_lookup(township_id):
+  township_id = int(township_id)
+  townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv').drop_duplicates(
+    subset='project_id', keep="first"
+  )
+
+  results = townships[townships['project_id'] == township_id]
+
+  return results['state'].iloc[0]
+
+
+def city_lookup(township_id):
+  township_id = int(township_id)
+  townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv').drop_duplicates(
+    subset='project_id', keep="first"
+  )
+
+  results = townships[townships['project_id'] == township_id]
+
+  return results['area'].iloc[0]
 
 
 def is_float(n):
