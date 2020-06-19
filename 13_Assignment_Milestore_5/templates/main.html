@@ -220,7 +220,7 @@
             var markers = [];
 
             var api = 'http://35.240.173.129:8888';
-            //var api = 'http://localhost:9999';
+            var api = 'http://localhost:9999';
 
             function initMap() {
                 var kualaLumpur = {lat: 3.117395, lng: 101.677355};
@@ -275,47 +275,13 @@
             }
 
             function updatePredictionBox(position) {
-                // ajaxGetCitiesURL = api + '/nearby-cities/?lat=' + position.lat() + '&lng=' + position.lng();
                 ajaxGetTownshipsURL = api + '/nearby-townships/?lat=' + position.lat() + '&lng=' + position.lng();
                 ajaxNearestPoiURL = api + '/nearest-poi/?lat=' + position.lat() + '&lng=' + position.lng();
 
                 $("#overlay").fadeIn("slow");
 
-                // var ajaxGetCities = new XMLHttpRequest();
                 var ajaxGetTownships = new XMLHttpRequest();
                 var ajaxNearestPoi = new XMLHttpRequest();
-
-                //ajaxGetCities.onreadystatechange = function() {
-                //    if(this.status == 200 && this.readyState == 4) {
-                //        select = document.getElementById('city');
-
-                //        // Clear old options
-                //        select.options.length = 0;
-
-                //        // Populate new options
-                //        options = JSON.parse(this.responseText);
-                //        if(options.length > 0) {
-                //            for (index = 0; index < options.length; ++index) {
-                //                option = options[index];
-                //                select.options.add(new Option(option, option));
-                //            }
-                //            messageBox = document.getElementById("message_box");
-                //            messageBox.classList.remove("alert-success");
-                //            messageBox.classList.remove("alert-danger");
-                //            messageBox.classList.remove("alert-primary");
-                //            messageBox.innerHTML = '';
-                //        } else {
-                //            select.options.add(new Option('Please pick another location', ''));
-                //            messageBox = document.getElementById("message_box");
-                //            messageBox.classList.remove("alert-success");
-                //            messageBox.classList.remove("alert-danger");
-                //            messageBox.classList.add("alert-primary");
-                //            messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>Signal Lost. Coverage: Kuala Lumpur, Selangor, Penang and Johor only';
-                //        }
-
-                //        $("#overlay").fadeOut();
-                //    }
-                //}
 
                 ajaxGetTownships.onreadystatechange = function() {
                     if(this.status == 200 && this.readyState == 4) {
@@ -344,9 +310,18 @@
                             messageBox.classList.add("alert-primary");
                             messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>No townships found near by the selected location. Coverage: Kuala Lumpur, Selangor, Penang and Johor only';
                         }
-
-                        $("#overlay").fadeOut();
                     }
+
+                    if(this.status == 500) {
+                        select.options.add(new Option('Please pick another location', ''));
+                        messageBox = document.getElementById("message_box");
+                        messageBox.classList.remove("alert-success");
+                        messageBox.classList.remove("alert-danger");
+                        messageBox.classList.add("alert-primary");
+                        messageBox.innerHTML = '<strong>Ooops!</strong>' + '<br/>Error: No data available for the selected townships';
+                    }
+
+                    $("#overlay").fadeOut();
                 }
 
                 ajaxNearestPoi.onreadystatechange = function() {
@@ -357,8 +332,6 @@
                     }
                 }
 
-                //ajaxGetCities.open('GET', ajaxGetCitiesURL, true);
-                //ajaxGetCities.send();
                 ajaxGetTownships.open('GET', ajaxGetTownshipsURL, true);
                 ajaxGetTownships.send();
                 ajaxNearestPoi.open('GET', ajaxNearestPoiURL, true);

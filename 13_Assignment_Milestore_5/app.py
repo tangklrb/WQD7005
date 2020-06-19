@@ -15,42 +15,33 @@ def map():
   return render_template('main.html')
 
 
-@app.route('/nearby-cities/', methods=['GET'])
-def nearby_cities():
-  target_coordinate = (request.args.get('lat'), request.args.get('lng'))
-
-  townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv')
-  townships['coordinates'] = list(zip(townships['latitude'], townships['longitude']))
-
-  townships['distance'] = townships['coordinates'].apply(
-    lambda x: calc_distance(x, target_coordinate)
-  )
-
-  # return all cities within 15km
-  nearby_cities = townships[townships['distance'] <= 5000][
-    ['area', 'distance']
-  ].groupby('area').min().reset_index().sort_values('distance')
-
-  return (json.dumps(list(nearby_cities['area'])))
-
-
 @app.route('/nearby-townships/', methods=['GET'])
 def nearby_townships():
   target_coordinate = (request.args.get('lat'), request.args.get('lng'))
 
   townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv')
+  transactions = pd.read_csv('../data/processed/edgeprop_transactions_processed.csv')
+
+  townships = pd.merge(
+    townships,
+    transactions.drop_duplicates(subset=['project_id']),
+    on='project_id',
+    how='inner',
+    suffixes=('', '_2')
+  )
+
   townships['coordinates'] = list(zip(townships['latitude'], townships['longitude']))
 
   townships['distance'] = townships['coordinates'].apply(
     lambda x: calc_distance(x, target_coordinate)
   )
 
-  # return all townships within 2km
+  # return all townships within 2km, limit to 15 options only
   nearby_townships_2km = townships[townships['distance'] <= 2000][
     ['project_id', 'township', 'distance']
   ].groupby('project_id').min().reset_index().sort_values('distance')
 
-  return (json.dumps(nearby_townships_2km.to_dict('records')))
+  return (json.dumps(nearby_townships_2km.head(15).to_dict('records')))
 
 
 # calculate distance between two points
@@ -73,6 +64,7 @@ def nearest_poi():
     'nearest_poi': pois['distance'].min()
   }))
 
+
 @app.route('/predict-price/', methods=['POST'])
 def predict_price():
   if request.method == "POST":
@@ -81,9 +73,6 @@ def predict_price():
 
     if not is_float(data['area_sqft']):
       error_messages.append("Please enter a valid number for Area (sqft)")
-
-    # if len(data['city']) == 0:
-    #   error_messages.append("Coverage: Kuala Lumpur, Selangor, Penang & Johor only. Please pick the property location from map and select the nearest city")
 
     if len(data['project_id']) == 0:
       error_messages.append("Coverage: Kuala Lumpur, Selangor, Penang & Johor only. Please pick the property location from map and select the nearest city")
@@ -95,8 +84,6 @@ def predict_price():
       }))
 
     input_features = pd.DataFrame([data])
-    input_features['state'] = input_features['project_id'].apply(state_lookup)
-    input_features['city'] = input_features['project_id'].apply(city_lookup)
     input_features['project_id'] = input_features['project_id'].astype('int')
 
     print(input_features)
@@ -112,28 +99,6 @@ def predict_price():
     return ('{ "status": "Error", "message": "No data are posted"}')
 
 
-def state_lookup(township_id):
-  township_id = int(township_id)
-  townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv').drop_duplicates(
-    subset='project_id', keep="first"
-  )
-
-  results = townships[townships['project_id'] == township_id]
-
-  return results['state'].iloc[0]
-
-
-def city_lookup(township_id):
-  township_id = int(township_id)
-  townships = pd.read_csv('../data/processed/edgeprop_townships_preprocessed.csv').drop_duplicates(
-    subset='project_id', keep="first"
-  )
-
-  results = townships[townships['project_id'] == township_id]
-
-  return results['area'].iloc[0]
-
-
 def is_float(n):
   try:
     float(n)
@@ -143,4 +108,4 @@ def is_float(n):
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=8888, debug=True)
+  app.run(host='0.0.0.0', port=9999, debug=True)
